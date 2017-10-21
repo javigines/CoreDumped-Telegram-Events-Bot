@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import subprocess                                               ## System module
-import sys                                                      ## System module
+import sys
+import os                                                       ## System module
 import datetime                                                 ## System module
 import logging                                                  ## System module
 import time                                                     ## System module
@@ -12,18 +13,21 @@ from time import gmtime, strftime                               ## System module
 import schedule                                                 ## pip install schedule
 from telegram.ext import Updater, CommandHandler                ## pip install python-telegram-bot
 
-import birthdaymanager as bm                                    ## Own module
+import birthdayManager as bm                                    ## Own module
 
 ## Debug chat_id
 chatIDDeveloper = 372406715
 ## Chat_id from group you what to announce birthday greetings
 chatIDCoreDumped = -1001088278003
 
-
+finish = False
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.WARNING)
+
 # Usefull for /restart
-time.sleep(10)
+if(len(sys.argv)>1):
+    subprocess.call("kill -9 " + str(sys.argv[1]), shell=True)
+    time.sleep(3)
 
 # Validate date format
 def validate(date_text):
@@ -119,11 +123,25 @@ def restart(bot, update):
 
     bot.sendMessage(chat_id=chatIDDeveloper, text='/restart --> ' + username + " (chat_id:" + str(chat_id) + " , user_id:"+ str(user_id) + ")")
     if user_id == chatIDDeveloper:
-        subprocess.call(['.$HOME/BirthdayBot/startBot.sh'])
-        subprocess.call(['exit'])
+        subprocess.call("python3.6 mainBot.py " + str(os.getpid()), shell=True)
+#       subprocess.call(['exit'])
 
     else:
         bot.sendMessage(chat_id=chat_id, text='Estás tocando algo que no debes, huye mientras puedas, es una amenaza.')
+        
+
+# Command /stop
+def stop(bot, update):
+    username = update.message.from_user.name
+    chat_id = update.message.chat.id
+    user_id = update.message.from_user.id
+
+    bot.sendMessage(chat_id=chatIDDeveloper, text='/stop --> ' + username + " (chat_id:" + str(chat_id) + " , user_id:"+ str(user_id) + ")")
+    if user_id == chatIDDeveloper:
+        os._exit(1)
+
+    else:
+        bot.sendMessage(chat_id=chat_id, text='Estás tocando algo que no debes, huye mientras puedas, es una advertencia')
         
 
 
@@ -180,6 +198,9 @@ list_handler = CommandHandler('list', list, pass_args=False)
 dispatcher.add_handler(list_handler)
 restart_handler = CommandHandler('restart', restart, pass_args=False)
 dispatcher.add_handler(restart_handler)
+stop_handler = CommandHandler('stop', stop, pass_args=False)
+dispatcher.add_handler(stop_handler)
+
 
 
 schedule.every().day.at("08:00").do(happybirthday,False)
@@ -189,11 +210,14 @@ schedule.every().day.at("12:00").do(happybirthday,True)
 
 updater.start_polling(timeout=30)
 print("mainBot Completly Loaded.\nBot Working...")
+updater.bot.sendMessage(chat_id=chatIDDeveloper, text="Bot Iniciado")
 
 try:
-    while 1:
+    while not finish:
         schedule.run_pending()
         time.sleep(1)
 except (KeyboardInterrupt, TypeError):
+    print("Exception")
+finally:
     updater.idle()
     print("\nBot Stoped\nShuting down...")

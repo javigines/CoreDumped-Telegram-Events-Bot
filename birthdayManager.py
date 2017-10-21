@@ -17,7 +17,7 @@ The file database is done with this structure.
 
 
 dirSep = sep
-mainDirectory = dirname(abspath(__file__)) + dirSep + 'Birtday' + dirSep
+mainDirectory = dirname(abspath(__file__)) + dirSep + 'Birthday' + dirSep
 
 # Check if Birthday is already saved
 def checkBirthday(username) :
@@ -48,14 +48,13 @@ def nextBirthday(before) :
 # Add a new birthday to the database
 def addBirthday(username, date):
     if not checkBirthday(username):
-        try:
-            newFile(date)
-            data = db.load_obj(mainDirectory + str(int(date.split('/')[1])) + dirSep + str(int(date.split('/')[0])) + '.pkl')
-            data[username] = date.split('/')[2]
-            db.save_obj(data, mainDirectory + str(int(date.split('/')[1])) + dirSep + str(int(date.split('/')[0])) + '.pkl')
-            return True
-        except:
-            return False
+        
+        newFile(date)
+        data = db.load_obj(mainDirectory + str(int(date.split('/')[1])) + dirSep + str(int(date.split('/')[0])) + '.pkl')
+        data[username] = date.split('/')[2]
+        db.save_obj(data, mainDirectory + str(int(date.split('/')[1])) + dirSep + str(int(date.split('/')[0])) + '.pkl')
+        return True
+
     else:
         return False
 
@@ -63,7 +62,7 @@ def addBirthday(username, date):
 # Remove birthday from database
 def removeBirthday(username):
     if checkBirthday(username):
-        date = listBirthday().get(username, default=None)
+        date = dict(listBirthday()).get(username)
         if(date != None):  # Birthday should be here but better check it
             data = db.load_obj(mainDirectory + str(int(str(date).split('/')[1])) + dirSep + str(int(str(date).split('/')[0])) + '.pkl')
             data.pop(username, None)
@@ -77,7 +76,8 @@ def listBirthday():
     birthdayList = {}
     i = 1
     while(i<13):
-        onlyfiles = [f for f in listdir(mainDirectory + str(i) + dirSep) if (isfile(join(mainDirectory + str(i) + dirSep, f) and f != '.gitignore'))]
+        onlyfiles = [f for f in listdir(mainDirectory + str(i) + dirSep) 
+	if not f.startswith('.') and f != "" and isfile(join(mainDirectory + str(i) + dirSep, f))]
         j=0
         while(j<len(onlyfiles)):
             cumpleFile = db.load_obj(mainDirectory + dirSep + str(i) + dirSep + onlyfiles[j])
@@ -93,9 +93,9 @@ def listBirthday():
 
 # Create day file if is not created
 def newFile(date):
-    my_file = Path(mainDirectory + str(date.split('/')[1]) + dirSep + str(date.split('/')[0]) + '.pkl')
+    my_file = Path(mainDirectory + str(int(date.split('/')[1])) + dirSep + str(int(date.split('/')[0])) + '.pkl')
     if not my_file.is_file():
-        db.save_obj({}, mainDirectory + str(date.split('/')[1]) + dirSep + str(date.split('/')[0]) + '.pkl')
+        db.save_obj({}, mainDirectory + str(int(date.split('/')[1])) + dirSep + str(int(date.split('/')[0])) + '.pkl')
 
 
 print("BirthdayManager Module Loaded Correctly.")

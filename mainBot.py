@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import subprocess                                               ## System module
-import sys
+import sys							## System module
 import os                                                       ## System module
 import datetime                                                 ## System module
 import logging                                                  ## System module
@@ -20,7 +20,6 @@ chatIDDeveloper = 372406715
 ## Chat_id from group you what to announce birthday greetings
 chatIDCoreDumped = -1001088278003
 
-finish = False
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.WARNING)
 
@@ -124,7 +123,6 @@ def restart(bot, update):
     bot.sendMessage(chat_id=chatIDDeveloper, text='/restart --> ' + username + " (chat_id:" + str(chat_id) + " , user_id:"+ str(user_id) + ")")
     if user_id == chatIDDeveloper:
         subprocess.call("python3.6 mainBot.py " + str(os.getpid()), shell=True)
-#       subprocess.call(['exit'])
 
     else:
         bot.sendMessage(chat_id=chat_id, text='Estás tocando algo que no debes, huye mientras puedas, es una amenaza.')
@@ -213,7 +211,7 @@ print("mainBot Completly Loaded.\nBot Working...")
 updater.bot.sendMessage(chat_id=chatIDDeveloper, text="Bot Iniciado")
 
 try:
-    while not finish:
+    while 1:
         schedule.run_pending()
         time.sleep(1)
 except (KeyboardInterrupt, TypeError):

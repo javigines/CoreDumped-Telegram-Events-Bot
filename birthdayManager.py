@@ -48,13 +48,14 @@ def nextBirthday(before) :
 # Add a new birthday to the database
 def addBirthday(username, date):
     if not checkBirthday(username):
-        
-        newFile(date)
-        data = db.load_obj(mainDirectory + str(int(date.split('/')[1])) + dirSep + str(int(date.split('/')[0])) + '.pkl')
-        data[username] = date.split('/')[2]
-        db.save_obj(data, mainDirectory + str(int(date.split('/')[1])) + dirSep + str(int(date.split('/')[0])) + '.pkl')
-        return True
-
+        try:
+            newFile(date)
+            data = db.load_obj(mainDirectory + str(int(date.split('/')[1])) + dirSep + str(int(date.split('/')[0])) + '.pkl')
+            data[username] = date.split('/')[2]
+            db.save_obj(data, mainDirectory + str(int(date.split('/')[1])) + dirSep + str(int(date.split('/')[0])) + '.pkl')
+            return True
+        except:
+            return False
     else:
         return False
 
@@ -76,8 +77,7 @@ def listBirthday():
     birthdayList = {}
     i = 1
     while(i<13):
-        onlyfiles = [f for f in listdir(mainDirectory + str(i) + dirSep) 
-	if not f.startswith('.') and f != "" and isfile(join(mainDirectory + str(i) + dirSep, f))]
+        onlyfiles = [f for f in listdir(mainDirectory + str(i) + dirSep) if not f.startswith('.') and f != "" and isfile(join(mainDirectory + str(i) + dirSep, f))]
         j=0
         while(j<len(onlyfiles)):
             cumpleFile = db.load_obj(mainDirectory + dirSep + str(i) + dirSep + onlyfiles[j])

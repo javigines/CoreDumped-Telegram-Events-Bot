@@ -3,7 +3,7 @@
 
 from os import listdir, sep                                 ## System module
 from os.path import isfile, join, dirname, abspath          ## System module
-import datetime                                             ## System module
+from datetime import date                                   ## System module
 from pathlib import Path                                    ## pip install pathlib
 
 import database as db                                       ## Own module
@@ -11,7 +11,9 @@ import database as db                                       ## Own module
 
 """
 The file database is done with this structure.
-    month/day.pkl --> {@username:Year}
+    New Format : month/day.pkl --> {@user_id:"username:Year"}
+
+    Old Format : month/day.pkl --> {@username:Year}
 
 """
 
@@ -19,20 +21,22 @@ The file database is done with this structure.
 dirSep = sep
 mainDirectory = dirname(abspath(__file__)) + dirSep + 'Birthday' + dirSep
 
+
 # Check if Birthday is already saved
-def checkBirthday(username) :
+def checkBirthday(user_id) :
     birthday = listBirthday()
-    if birthday is not None and username in birthday.keys():
+    if birthday is not None and user_id in str(birthday.keys()):
         return True
     return False
 
+
 # Check who the birthday is today or if before is True who  is the birthday tomorrow
 def nextBirthday(before) :
-    date = datetime.date.today()
+    bdate = date.today()
     if before:
-        file = db.load_obj(mainDirectory + date.strftime("%m") + dirSep + str(int(date.strftime("%d"))+1) + ".pkl")
+        file = db.load_obj(mainDirectory + bdate.strftime("%m") + dirSep + str(int(bdate.strftime("%d"))+1) + ".pkl")
     else:
-        file = db.load_obj(mainDirectory + date.strftime("%m") + dirSep + date.strftime("%d") + ".pkl")
+        file = db.load_obj(mainDirectory + bdate.strftime("%m") + dirSep + bdate.strftime("%d") + ".pkl")
 
     if not file:
         return None
@@ -46,12 +50,12 @@ def nextBirthday(before) :
 
 
 # Add a new birthday to the database
-def addBirthday(username, date):
-    if not checkBirthday(username):
+def addBirthday(username, date, user_id):
+    if not checkBirthday(user_id):
         try:
             newFile(date)
             data = db.load_obj(mainDirectory + str(int(date.split('/')[1])) + dirSep + str(int(date.split('/')[0])) + '.pkl')
-            data[username] = date.split('/')[2]
+            data[user_id] = username + ":" + date.split('/')[2]
             db.save_obj(data, mainDirectory + str(int(date.split('/')[1])) + dirSep + str(int(date.split('/')[0])) + '.pkl')
             return True
         except:
@@ -61,13 +65,14 @@ def addBirthday(username, date):
 
 
 # Remove birthday from database
-def removeBirthday(username):
-    if checkBirthday(username):
-        date = dict(listBirthday()).get(username)
+def removeBirthday(user_id):
+    print(user_id)
+    if checkBirthday(user_id):
+        date = dict(listBirthday()).get(user_id)
         if(date != None):  # Birthday should be here but better check it
-            data = db.load_obj(mainDirectory + str(int(str(date).split('/')[1])) + dirSep + str(int(str(date).split('/')[0])) + '.pkl')
-            data.pop(username, None)
-            db.save_obj(data, mainDirectory + str(int(str(date).split('/')[1])) + dirSep + str(int(str(date).split('/')[0])) + '.pkl')
+            data = db.load_obj(mainDirectory + str(int(str(date).split('/')[1])) + dirSep + str(int(str(date).split(':')[1].split('/')[0])) + '.pkl')
+            data.pop(user_id, None)
+            db.save_obj(data, mainDirectory + str(int(str(date).split('/')[1])) + dirSep + str(int(str(date).split(':')[1].split('/')[0])) + '.pkl')
             return True
     return False
 
@@ -84,7 +89,7 @@ def listBirthday():
             if (cumpleFile != '' and cumpleFile != {} and  isinstance(cumpleFile, dict)):
                 k=0
                 while(k<len(cumpleFile)):
-                    birthdayList[list(cumpleFile.keys())[k]] = (onlyfiles[j].replace(".pkl", "")+'/'+str(i)+'/'+list(cumpleFile.values())[k])
+                    birthdayList[list(cumpleFile.keys())[k]] =  list(cumpleFile.values())[k].split(":")[0] + ":" + (onlyfiles[j].replace(".pkl", "")+'/'+str(i)+'/'+list(cumpleFile.values())[k].split(":")[1])
                     k+=1
             j+=1
         i+=1

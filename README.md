@@ -1,5 +1,5 @@
 # BirthdayBot-CoreDumped
-Coredumped association Birthday Bot
+Coredumped Birthday Telegram Bot
 
 Needed Python Modules:
 

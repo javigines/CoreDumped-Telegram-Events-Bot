@@ -4,15 +4,15 @@
 
 from os import listdir, sep                                 ## System module
 from os.path import isfile, join, dirname, abspath          ## System module
+from pathlib import Path                                    ## pip install pathlib
 
 import database as db
-import birthdayManager.py as bm
 
-# user_id, sort and manually inserted 
-user_id_list = []
+# username and user_id, manually inserted 
+user_id_dict = {}
 
 dirSep = sep
-mainDirectory = dirname(abspath(__file__)) + dirSep + 'Birtday' + dirSep
+mainDirectory = dirname(abspath(__file__)) + dirSep + 'Birthday' + dirSep
 
 
 # list and clean the old database
@@ -37,14 +37,11 @@ def listBirthday():
 
 # add with the new format to the new database
 def addBirthday(username, date, user_id):
-    try:
-        newFile(date)
-        data = db.load_obj(mainDirectory + str(int(date.split('/')[1])) + dirSep + str(int(date.split('/')[0])) + '.pkl')
-        data[user_id] = username + ":" + date.split('/')[2]
-        db.save_obj(data, mainDirectory + str(int(date.split('/')[1])) + dirSep + str(int(date.split('/')[0])) + '.pkl')
-        return True
-    except:
-        return False
+	newFile(date)
+	data = db.load_obj(mainDirectory + str(int(date.split('/')[1])) + dirSep + str(int(date.split('/')[0])) + '.pkl')
+	data[user_id] = username + ":" + date.split('/')[2]
+	db.save_obj(data, mainDirectory + str(int(date.split('/')[1])) + dirSep + str(int(date.split('/')[0])) + '.pkl')
+	return True
 
 
 
@@ -57,8 +54,11 @@ def newFile(date):
 oldBirthday = listBirthday()
 i=0
 while(i<len(oldBirthday)):
-    addBirthday(list(oldBirthday.keys())[i],
-                   list(oldBirthday.values())[i],
-                   user_id_list[i])
-
+    print(str(i))
+    if(user_id_list.get(list(oldBirthday.keys())[i])!=None):
+        addBirthday(list(oldBirthday.keys())[i],
+                    list(oldBirthday.values())[i],
+                    user_id_list.get(list(oldBirthday.keys())[i]))
+        print(str(i) + ".  " + "Updated " + list(oldBirthday.keys())[i] + "  -->  " + user_id_list.get(list(oldBirthday.keys())[i]) + "  -->   " + list(oldBirthday.values())[i])
+    i+=1
 print("Done")

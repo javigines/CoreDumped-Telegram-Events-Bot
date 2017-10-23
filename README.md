@@ -4,13 +4,13 @@ Coredumped Birthday Telegram Bot
 Needed Python Modules:
 
 	Telegram Official Pyhton Bot Api:
-	pip install python-telegram-bot
+	pip3 install python-telegram-bot
 
 	Scheduler for Birthday Greetings:
-	pip install schedule
+	pip3 install schedule
 
 	Pathlib for check some path in file-based database:
-	pip install pathlib
+	pip3 install pathlib
 
 	
 Needed extra file "token.txt" in main bot directory with bot token Key on first line

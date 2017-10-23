@@ -53,7 +53,7 @@ def add(bot, update, args=None):
     if args is None or not validate(args[0]):
         bot.sendMessage(chat_id=chat_id, text='No me estás enviando tu cumpleaños bien.\nEl formato es: "dd/mm/AAAA\n\n')
         
-    elif bm.checkBirthday(username):
+    elif bm.checkBirthday(str(user_id)):
         bot.sendMessage(chat_id=chat_id, text='Ya he guardado tu cumpleaños.\nPide a @javigines que lo borre si no es correcto.')
         
     else:

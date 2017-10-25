@@ -23,10 +23,13 @@ mainDirectory = dirname(abspath(__file__)) + dirSep + 'Birthday' + dirSep
 
 
 # Check if Birthday is already saved
-def checkBirthday(user_id) :
+def checkBirthday(user) :
     birthday = listBirthday()
-    if birthday is not None and user_id in str(birthday.keys()):
-        return True
+    if birthday is not None:
+        if user is not None and user in str(birthday.keys()):
+            return True
+        elif user is not None and user[0:1] == "@" and user in str(birthday.values()):
+            return True
     return False
 
 

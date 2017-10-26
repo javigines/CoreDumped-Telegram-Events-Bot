@@ -211,11 +211,11 @@ def updateB(bot, update):
 	bot.sendMessage(chat_id=chatIDDeveloper, text='/stopB --> ' + username + " (chat_id:" + str(chat_id) + " , user_id:"+ str(user_id) + ")")
 	if user_id == chatIDDeveloper:
 		bot.sendMessage(chat_id=chatIDDeveloper, text='Actualizando...')
-		call("wget https://github.com/javigines/BirthdayBot-CoreDumped/archive/master.zip", shell=True)
-		call("unzip master.zip -d $HOME", shell=True)
-		call("rm -f master.zip*", shell=True)
-		call("cp -rf $HOME/BirthdayBot-CoreDumped-master/* $HOME/BirthdayBot/ ", shell=True)
-		call("rm -rf $HOME/BirthdayBot-CoreDumped-master/", shell=True)
+		call("wget -qP /$HOME/BirthdayBot/ https://api.github.com/repos/javigines/BirthdayBot-CoreDumped/tarball/master", shell=True)
+		call("tar -xzf /$HOME/BirthdayBot/master -C $HOME", shell=True)
+		call("rm -f /$HOME/BirthdayBot/master*", shell=True)
+		call("cp -rf $HOME/javigines-BirthdayBot-CoreDumped-*/* $HOME/BirthdayBot/ ", shell=True)
+		call("rm -rf $HOME/javigines-BirthdayBot-CoreDumped-*/", shell=True)
 		bot.sendMessage(chat_id=chatIDDeveloper, text='Actualización completa. Reinicia para aplicar.')
 
 	else:

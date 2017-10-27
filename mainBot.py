@@ -3,24 +3,32 @@
 
 from subprocess import call									## System module
 from sys import argv										## System module
-from os import _exit, getpid									## System module
-import logging											## System module
+from os import _exit, getpid								## System module
+import logging												## System module
 from random import randint									## System module
-from time import gmtime, sleep, strftime							## System module
-from datetime import datetime									## System module
+from time import gmtime, sleep, strftime					## System module
+from datetime import datetime								## System module
 
-import schedule											## pip install schedule
-from telegram.ext import Updater, CommandHandler						## pip install python-telegram-bot
+import schedule												## pip install schedule
+from telegram.ext import Updater, CommandHandler			## pip install python-telegram-bot
 
-import birthdayManager as bm									## Own module
+import birthdayManager as bm								## Own module
+#import message as ms										## Own module
 
 ## Debug chat_id
 chatIDDeveloper = 372406715
-## Chat_id from group you what to announce birthday greetings
+## Chat_id from group you what to announce events greetings
 chatIDCoreDumped = -1001088278003
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-					level=logging.WARNING)
+
+## Usefull Variables
+message = None
+username = None
+chat_id = None
+user_id = None
+
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.WARNING)
 
 # Usefull for /restartB
 if(len(argv)>1):
@@ -35,8 +43,12 @@ def validate(date_text):
 	except:
 		return False
 
-#Command /startB or /helpB
-def startB(bot, update):
+def startWithCommand(bot, update, args=['']):
+	global message
+	global username
+	global chat_id
+	global user_id
+	
 	if update.message == None:
 		message = update.edited_message
 	else:
@@ -46,19 +58,18 @@ def startB(bot, update):
 	chat_id = message.chat.id
 	user_id = message.from_user.id
 	
-	bot.sendMessage(chat_id=chatIDDeveloper, text='/startB --> ' + username + " (chat_id:" + str(chat_id) + " , user_id:"+ str(user_id) + ")")
+	bot.sendMessage(chat_id=chatIDDeveloper, text='/' + update.message.entities.BOT_COMMAND + ' ' + ' '.join(args) + ' --> ' + username + " (chat_id:" + str(chat_id) + " , user_id:"+ str(user_id) + ")")
+	
+		
+#Command /startB or /helpB
+def startB(bot, update):
+	startWithCommand(bot, update)
+	
 	bot.sendMessage(chat_id=chat_id, text='Para añadir tu cumpleaños escribe:\n/birthday 23/01/1997')
 
 #Command /birthday
 def addBirthday(bot, update, args=None):
-	if update.message == None:
-		message = update.edited_message
-	else:
-		message = update.message
-
-	username = message.from_user.name
-	chat_id = message.chat.id
-	user_id = message.from_user.id
+	startWithCommand(bot, update, args=args)
 
 	if args is None or args == '' or args == [] or not validate(args[0]):
 		bot.sendMessage(chat_id=chat_id, text='No me estás enviando tu cumpleaños bien.\nEl formato es: "dd/mm/AAAA\n\n')
@@ -68,7 +79,6 @@ def addBirthday(bot, update, args=None):
 		
 	else:
 		if bm.addBirthday(username, args[0], str(user_id)):
-			bot.sendMessage(chat_id=chatIDDeveloper, text='/birthday '+ args[0] + ' --> ' + username + " (chat_id:" + str(chat_id) + " , user_id:"+ str(user_id) + ")")
 			bot.sendMessage(chat_id=chat_id, text='Perfecto, he guardado tu cumple ' + username + ' en la fecha: '+ args[0])
 			
 		else:
@@ -76,19 +86,16 @@ def addBirthday(bot, update, args=None):
 			bot.sendMessage(chat_id=chat_id, text='Ha ocurrido un error y se ha informado de él.')
 
 
+#Command /event
+def addEvent(bot, update, args=None):
+	startWithCommand(bot, update, args=args)
+		
+
 
 #Command /removeB or /deleteB
 def removeB(bot, update, args=None):
-	if update.message == None:
-		message = update.edited_message
-	else:
-		message = update.message
+	startWithCommand(bot, update, args=args)
 
-	username = message.from_user.name
-	chat_id = message.chat.id
-	user_id = message.from_user.id
-
-	bot.sendMessage(chat_id=chatIDDeveloper, text='/removeB --> ' + username + " (chat_id:" + str(chat_id) + " , user_id:"+ str(user_id) + ")")
 	if user_id == chatIDDeveloper:
 		if (args is not None and args != '' and args != []):
 			if bm.checkBirthday(args[0]):
@@ -118,16 +125,7 @@ def removeB(bot, update, args=None):
 
 # Command /listB or /eventsB
 def listB(bot, update, args=None):
-	if update.message == None:
-		message = update.edited_message
-	else:
-		message = update.message
-
-	username = message.from_user.name
-	chat_id = message.chat.id
-	user_id = message.from_user.id
-	
-	bot.sendMessage(chat_id=chatIDDeveloper, text='/listB --> ' + username + " (chat_id:" + str(chat_id) + " , user_id:"+ str(user_id) + ")")
+	startWithCommand(bot, update, args=args)
 	
 	birthdaylist = bm.listBirthday()
 	if birthdaylist is not None:
@@ -143,7 +141,7 @@ def listB(bot, update, args=None):
 			bot.sendMessage(chat_id=chat_id, text=birthdaylist)
 		else:
 			if(chat_id != user_id):
-                                bot.sendMessage(chat_id=chat_id, text="Pídeme el listado de cumpleaños por privado o no podré mandartelo.")
+				bot.sendMessage(chat_id=chat_id, text="Pídeme el listado de cumpleaños por privado o no podré mandartelo.")
 			else:
 				i=0
 				newbirthdayString = ""
@@ -158,16 +156,7 @@ def listB(bot, update, args=None):
 
 # Command /restartB or /rebootB
 def restartB(bot, update):
-	if update.message == None:
-		message = update.edited_message
-	else:
-		message = update.message
-
-	username = message.from_user.name
-	chat_id = message.chat.id
-	user_id = message.from_user.id
-
-	bot.sendMessage(chat_id=chatIDDeveloper, text='/restartB --> ' + username + " (chat_id:" + str(chat_id) + " , user_id:"+ str(user_id) + ")")
+	startWithCommand(bot, update)
 
 	if user_id == chatIDDeveloper:
 		bot.sendMessage(chat_id=chat_id, text="Reiniciando...")
@@ -179,16 +168,8 @@ def restartB(bot, update):
 
 # Command /stopB
 def stopB(bot, update):
-	if update.message == None:
-		message = update.edited_message
-	else:
-		message = update.message
-
-	username = message.from_user.name
-	chat_id = message.chat.id
-	user_id = message.from_user.id
-
-	bot.sendMessage(chat_id=chatIDDeveloper, text='/stopB --> ' + username + " (chat_id:" + str(chat_id) + " , user_id:"+ str(user_id) + ")")
+	startWithCommand(bot, update)
+	
 	if user_id == chatIDDeveloper:
 		bot.sendMessage(chat_id=chat_id, text="Deteniendo el bot...")
 		_exit(1)
@@ -199,16 +180,8 @@ def stopB(bot, update):
 
 # Command /updateB
 def updateB(bot, update):
-	if update.message == None:
-		message = update.edited_message
-	else:
-		message = update.message
+	startWithCommand(bot, update)
 
-	username = message.from_user.name
-	chat_id = message.chat.id
-	user_id = message.from_user.id
-
-	bot.sendMessage(chat_id=chatIDDeveloper, text='/stopB --> ' + username + " (chat_id:" + str(chat_id) + " , user_id:"+ str(user_id) + ")")
 	if user_id == chatIDDeveloper:
 		bot.sendMessage(chat_id=chatIDDeveloper, text='Actualizando...')
 		call("wget -qP /$HOME/BirthdayBot/ https://api.github.com/repos/javigines/BirthdayBot-CoreDumped/tarball/master", shell=True)
@@ -223,24 +196,19 @@ def updateB(bot, update):
 
 # Leave the group /leaveB
 def leaveGroup(bot, update):
-        if update.message == None:
-                message = update.edited_message
-        else:
-                message = update.message
+	startWithCommand(bot, update)
 
-        username = message.from_user.name
-        chat_id = message.chat.id
-        user_id = message.from_user.id
+	if user_id == chatIDDeveloper and update.effective_chat != None and update.effective_chat.type != "private":
+		bot.sendMessage(chat_id=chat_id, text="Hasta Siempre...")
+		updater.bot.getChat(chat_id=chat_id).leave()
 
-        bot.sendMessage(chat_id=chatIDDeveloper, text='/leaveB --> ' + username + " (chat_id:" + str(chat_id) + " , user_id:"+ str(user_id) + ")")
+	else:
+		bot.sendMessage(chat_id=chat_id, text='Estás tocando algo que no debes, huye mientras puedas, es una advertencia')
 
-        if user_id == chatIDDeveloper and update.effective_chat != None and update.effective_chat.type != "private":
-                bot.sendMessage(chat_id=chat_id, text="Hasta Siempre...")
-                updater.bot.getChat(chat_id=chat_id).leave()
 
-        else:
-                bot.sendMessage(chat_id=chat_id, text='Estás tocando algo que no debes, huye mientras puedas, es una advertencia')
-
+# Changelog command /changelog
+def changelogB(bot, update):
+	startWithCommand(bot, update)
 
 
 # Greetings or reminder 
@@ -289,6 +257,8 @@ start_handler = CommandHandler(list(['startB','helpb']), startB, pass_args=False
 dispatcher.add_handler(start_handler)
 addB_handler = CommandHandler('birthday', addBirthday, pass_args=True, allow_edited=True)
 dispatcher.add_handler(addB_handler)
+event_handler = CommandHandler('event', addEvent, pass_args=True, allow_edited=True)
+dispatcher.add_handler(event_handler)
 remove_handler = CommandHandler(list(['removeB','deleteB']), removeB, pass_args=True, allow_edited=True)
 dispatcher.add_handler(remove_handler)
 list_handler = CommandHandler(list(['listB','eventsB']), listB, pass_args=True, allow_edited=True)
@@ -301,6 +271,8 @@ leave_handler = CommandHandler('leaveB', leaveGroup, pass_args=False, allow_edit
 dispatcher.add_handler(leave_handler)
 update_handler = CommandHandler('updateB', updateB, pass_args=False, allow_edited=True)
 dispatcher.add_handler(update_handler)
+changelog_handler = CommandHandler('changelogB', changelogB, pass_args=False, allow_edited=True)
+dispatcher.add_handler(changelog_handler)
 
 
 schedule.every().day.at("08:00").do(happybirthday,False)

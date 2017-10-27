@@ -1,12 +1,12 @@
-# BirthdayBot-CoreDumped
-Coredumped Birthday Telegram Bot
+# EventsBot-CoreDumped
+Coredumped Events Telegram Bot
 
 Needed Python Modules:
 
 	Telegram Official Pyhton Bot Api:
 	pip3 install python-telegram-bot
 
-	Scheduler for Birthday Greetings:
+	Scheduler for Events Alerts:
 	pip3 install schedule
 
 	Pathlib for check some path in file-based database:

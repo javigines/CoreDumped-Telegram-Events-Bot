@@ -57,8 +57,7 @@ def startWithCommand(bot, update, args=['']):
 	username = message.from_user.name
 	chat_id = message.chat.id
 	user_id = message.from_user.id
-	
-	bot.sendMessage(chat_id=chatIDDeveloper, text='/' + update.message.entities.BOT_COMMAND + ' ' + ' '.join(args) + ' --> ' + username + " (chat_id:" + str(chat_id) + " , user_id:"+ str(user_id) + ")")
+	bot.sendMessage(chat_id=chatIDDeveloper, text=message.text.split(' ')[0] + ' ' + ' '.join(args) + ' --> ' + username + " (chat_id:" + str(chat_id) + " , user_id:"+ str(user_id) + ")")
 	
 		
 #Command /startB or /helpB

@@ -69,7 +69,6 @@ def addBirthday(username, date, user_id):
 
 # Remove birthday from database
 def removeBirthday(user_id):
-    print(user_id)
     if checkBirthday(user_id):
         date = dict(listBirthday()).get(user_id)
         if(date != None):  # Birthday should be here but better check it

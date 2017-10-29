@@ -54,7 +54,6 @@ def newFile(date):
 oldBirthday = listBirthday()
 i=0
 while(i<len(oldBirthday)):
-    print(str(i))
     if(user_id_list.get(list(oldBirthday.keys())[i])!=None):
         addBirthday(list(oldBirthday.keys())[i],
                     list(oldBirthday.values())[i],

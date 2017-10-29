@@ -5,7 +5,7 @@ helpOrStart = 'Para añadir tu cumpleaños escribe:\n/birthday 23/01/1997'
 # Command /birthday
 formatErrorBirthday = 'No me estás enviando tu cumpleaños bien.\nEl formato es: "dd/mm/AAAA\n\n'
 askForDelete = 'Ya he guardado tu cumpleaños.\nPide a @javigines que lo borre si no es correcto.'
-newBirthdayAdded = 'Perfecto, he guardado tu cumple $args1 en la fecha: args2'
+newBirthdayAdded = 'Perfecto, he guardado tu cumple $args1 en la fecha: $args2'
 
 # Command /deleteB or /removeB
 removeBirthdayDone = 'Cumpleaños de $args1 borrado correctamente.'

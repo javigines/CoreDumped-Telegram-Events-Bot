@@ -82,7 +82,7 @@ def addBirthday(bot, update, args=None):
 
 		else:
 			bot.sendMessage(chat_id=chatIDDeveloper, text=ms.errorExecCommandAdmin.replace("$args1", message.text.split(' ')[0]).replace("$args2", str(args))
-				.replace("$args3", username).replace("$args4", str(chat_id)).replace("$args4", str(user_id))
+				.replace("$args3", username).replace("$args4", str(chat_id)).replace("$args4", str(user_id)))
 			bot.sendMessage(chat_id=chat_id, text=ms.errorExecCommandUser)
 
 
@@ -111,7 +111,7 @@ def removeB(bot, update, args=None):
 
 				else:
 					bot.sendMessage(chat_id=chatIDDeveloper, text=ms.errorExecCommandAdmin.replace("$args1", message.text.split(' ')[0]).replace("$args2", str(args))
-						.replace("$args3", username).replace("$args4", str(chat_id)).replace("$args4", str(user_id))
+						.replace("$args3", username).replace("$args4", str(chat_id)).replace("$args4", str(user_id)))
 					bot.sendMessage(chat_id=chat_id, text=ms.errorExecCommandUser)
 
 			else:

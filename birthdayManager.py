@@ -43,7 +43,7 @@ def nextBirthday(before) :
 
     if not file:
         return None
-    
+
     result=[]
     i=0
     while(i<len(file)):
@@ -85,9 +85,11 @@ def listBirthday():
     i = 1
     while(i<13):
         onlyfiles = [f for f in listdir(mainDirectory + str(i) + dirSep) if not f.startswith('.') and f != "" and isfile(join(mainDirectory + str(i) + dirSep, f))]
+        print(onlyfiles+'\n--------\n')
         j=0
         while(j<len(onlyfiles)):
             cumpleFile = db.load_obj(mainDirectory + dirSep + str(i) + dirSep + onlyfiles[j])
+            print(cumpleFile)
             if (cumpleFile != '' and cumpleFile != {} and  isinstance(cumpleFile, dict)):
                 k=0
                 while(k<len(cumpleFile)):
@@ -96,7 +98,7 @@ def listBirthday():
             j+=1
         i+=1
     return (birthdayList if (birthdayList != {}) else None)
-        
+
 
 # Create day file if is not created
 def newFile(date):
@@ -106,4 +108,3 @@ def newFile(date):
 
 
 print("BirthdayManager Module Loaded Correctly.")
-

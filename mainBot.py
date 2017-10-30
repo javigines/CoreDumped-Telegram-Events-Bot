@@ -192,7 +192,7 @@ def updateB(bot, update):
 		call("rm -f /$HOME/BirthdayBot/master*", shell=True)
 		call("cp -rf $HOME/javigines-EventsBot-CoreDumped-*/* $HOME/BirthdayBot/ ", shell=True)
 		call("rm -rf $HOME/javigines-EventsBot-CoreDumped-*/", shell=True)
-		
+
 		bot.sendMessage(chat_id=chatIDDeveloper, text=ms.updateDone)
 
 	else:
@@ -213,6 +213,12 @@ def leaveGroup(bot, update):
 # Changelog command /changelog
 def changelogB(bot, update):
 	startWithCommand(bot, update)
+
+	if user_id == chatIDDeveloper or user_id == chat_id:
+		bot.sendMessage(chat_id=chat_id, text=ms.changelog)
+		
+	else:
+		bot.sendMessage(chat_id=chat_id, text=ms.groupChangelogUser)
 
 
 # Greetings or reminder

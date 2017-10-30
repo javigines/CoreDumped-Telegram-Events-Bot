@@ -29,6 +29,10 @@ updateDone = 'Actualización completa. Reinicia para aplicar.'
 # Command /leaveB
 leaving = "Hasta Siempre..."
 
+# Command /changelogB
+groupChangelogUser = 'No queremos aburrir a la gente con el listado de cambios, ¿por qué no me lo preguntas por privado mejor?'
+changelog = ('Versión 1.0.2\n\n(WIP)')
+
 # Greetings Birthday
 birthdayGreetings = ["Felicidades $args1, cabron@, eres un puto año más viejo. ",
                     "Hueles un poco mal pero te felicito el cumpleaños $args1.",

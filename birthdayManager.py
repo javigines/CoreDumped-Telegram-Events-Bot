@@ -97,7 +97,7 @@ def listBirthday(Order):
                     if Order:
                         birthdayList.append(list(cumpleFile.values())[k].split(":")[0] +
                         ":" + (onlyfiles[j].replace(".pkl", "")+'/'+str(i)+'/'+list(cumpleFile.values())[k].split(":")[1]) +
-                        ":" + [list(cumpleFile.keys())[k]])
+                        ":" + list(cumpleFile.keys())[k])
                     else:
                         birthdayList[list(cumpleFile.keys())[k]] =  list(cumpleFile.values())[k].split(":")[0] + ":" + (onlyfiles[j].replace(".pkl", "")+'/'+str(i)+'/'+list(cumpleFile.values())[k].split(":")[1])
                     k+=1

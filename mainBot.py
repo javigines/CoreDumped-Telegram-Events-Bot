@@ -186,7 +186,6 @@ def updateB(bot, update):
 
 	if user_id == chatIDDeveloper:
 		bot.sendMessage(chat_id=chatIDDeveloper, text=ms.updating)
-		call("wget -qP /$HOME/BirthdayBot/ https://api.github.com/repos/javigines/BirthdayBot-CoreDumped/tarball/master", shell=True)
 		call("wget -qP /$HOME/BirthdayBot/ https://api.github.com/repos/javigines/EventsBot-CoreDumped/tarball/master", shell=True)
 		call("tar -xzf /$HOME/BirthdayBot/master -C $HOME", shell=True)
 		call("rm -f /$HOME/BirthdayBot/master*", shell=True)

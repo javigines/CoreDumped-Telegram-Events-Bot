@@ -191,6 +191,13 @@ def updateB(bot, update):
 		call("rm -f /$HOME/BirthdayBot/master*", shell=True)
 		call("cp -rf $HOME/javigines-BirthdayBot-CoreDumped-*/* $HOME/BirthdayBot/ ", shell=True)
 		call("rm -rf $HOME/javigines-BirthdayBot-CoreDumped-*/", shell=True)
+=======
+		call("wget -qP /$HOME/BirthdayBot/ https://api.github.com/repos/javigines/EventsBot-CoreDumped/tarball/master", shell=True)
+		call("tar -xzf /$HOME/BirthdayBot/master -C $HOME", shell=True)
+		call("rm -f /$HOME/BirthdayBot/master*", shell=True)
+		call("cp -rf $HOME/javigines-EventsBot-CoreDumped-*/* $HOME/BirthdayBot/ ", shell=True)
+		call("rm -rf $HOME/javigines-EventsBot-CoreDumped-*/", shell=True)
+>>>>>>> master
 		bot.sendMessage(chat_id=chatIDDeveloper, text=ms.updateDone)
 
 	else:
@@ -265,7 +272,6 @@ dispatcher.add_handler(changelog_handler)
 
 
 schedule.every().day.at("08:00").do(happybirthday,False)
-schedule.every().day.at("12:00").do(happybirthday,False)
 schedule.every().day.at("20:00").do(happybirthday,True)
 
 

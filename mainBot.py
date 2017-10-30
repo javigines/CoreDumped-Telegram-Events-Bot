@@ -187,17 +187,12 @@ def updateB(bot, update):
 	if user_id == chatIDDeveloper:
 		bot.sendMessage(chat_id=chatIDDeveloper, text=ms.updating)
 		call("wget -qP /$HOME/BirthdayBot/ https://api.github.com/repos/javigines/BirthdayBot-CoreDumped/tarball/master", shell=True)
-		call("tar -xzf /$HOME/BirthdayBot/master -C $HOME", shell=True)
-		call("rm -f /$HOME/BirthdayBot/master*", shell=True)
-		call("cp -rf $HOME/javigines-BirthdayBot-CoreDumped-*/* $HOME/BirthdayBot/ ", shell=True)
-		call("rm -rf $HOME/javigines-BirthdayBot-CoreDumped-*/", shell=True)
-=======
 		call("wget -qP /$HOME/BirthdayBot/ https://api.github.com/repos/javigines/EventsBot-CoreDumped/tarball/master", shell=True)
 		call("tar -xzf /$HOME/BirthdayBot/master -C $HOME", shell=True)
 		call("rm -f /$HOME/BirthdayBot/master*", shell=True)
 		call("cp -rf $HOME/javigines-EventsBot-CoreDumped-*/* $HOME/BirthdayBot/ ", shell=True)
 		call("rm -rf $HOME/javigines-EventsBot-CoreDumped-*/", shell=True)
->>>>>>> master
+		
 		bot.sendMessage(chat_id=chatIDDeveloper, text=ms.updateDone)
 
 	else:

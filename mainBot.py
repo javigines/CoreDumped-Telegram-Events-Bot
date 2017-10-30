@@ -101,11 +101,11 @@ def removeB(bot, update, args=None):
 			if bm.checkBirthday(args[0]):
 				# Convert username to user_id
 				if args[0][0:1] == "@":
-					for key, value in bm.listBirthday().items():
+					for key, value in bm.listBirthday(False).items():
 						if value.split(":")[0] == args[0]:
 							args[0]=key
 				# Get username
-				name = dict(bm.listBirthday()).get(args[0])
+				name = dict(bm.listBirthday(False)).get(args[0])
 				if bm.removeBirthday(args[0]):
 					bot.sendMessage(chat_id=chat_id, text=ms.removeBirthdayDone.replace("$args1", name.split(":")[0]))
 
@@ -128,7 +128,7 @@ def removeB(bot, update, args=None):
 def listB(bot, update, args=None):
 	startWithCommand(bot, update, args=args)
 
-	birthdaylist = bm.listBirthday()
+	birthdaylist = bm.listBirthday(True)
 	if birthdaylist is not None:
 		if user_id == chatIDDeveloper:
 			if(args==None or args == '' or args == [] or args[0] != str(True)):
@@ -191,6 +191,7 @@ def updateB(bot, update):
 		call("rm -f /$HOME/BirthdayBot/master*", shell=True)
 		call("cp -rf $HOME/javigines-EventsBot-CoreDumped-*/* $HOME/BirthdayBot/ ", shell=True)
 		call("rm -rf $HOME/javigines-EventsBot-CoreDumped-*/", shell=True)
+
 		bot.sendMessage(chat_id=chatIDDeveloper, text=ms.updateDone)
 
 	else:
@@ -211,6 +212,12 @@ def leaveGroup(bot, update):
 # Changelog command /changelog
 def changelogB(bot, update):
 	startWithCommand(bot, update)
+
+	if user_id == chatIDDeveloper or user_id == chat_id:
+		bot.sendMessage(chat_id=chat_id, text=ms.changelog)
+
+	else:
+		bot.sendMessage(chat_id=chat_id, text=ms.groupChangelogUser)
 
 
 # Greetings or reminder

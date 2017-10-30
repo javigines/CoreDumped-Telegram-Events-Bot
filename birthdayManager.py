@@ -24,7 +24,7 @@ mainDirectory = dirname(abspath(__file__)) + dirSep + 'Birthday' + dirSep
 
 # Check if Birthday is already saved
 def checkBirthday(user) :
-    birthday = listBirthday()
+    birthday = listBirthday(False)
     if birthday is not None:
         if user is not None and user in str(birthday.keys()):
             return True
@@ -70,7 +70,7 @@ def addBirthday(username, date, user_id):
 # Remove birthday from database
 def removeBirthday(user_id):
     if checkBirthday(user_id):
-        date = dict(listBirthday()).get(user_id)
+        date = dict(listBirthday(False)).get(user_id)
         if(date != None):  # Birthday should be here but better check it
             data = db.load_obj(mainDirectory + str(int(str(date).split('/')[1])) + dirSep + str(int(str(date).split(':')[1].split('/')[0])) + '.pkl')
             data.pop(user_id, None)
@@ -80,8 +80,11 @@ def removeBirthday(user_id):
 
 
 # Return a Birthday List with every birthday in the database
-def listBirthday():
-    birthdayList = {}
+def listBirthday(Order):
+    if Order:
+        birthdayList = []
+    else:
+        birthdayList = {}
     i = 1
     while(i<13):
         onlyfiles = [f for f in listdir(mainDirectory + str(i) + dirSep) if not f.startswith('.') and f != "" and isfile(join(mainDirectory + str(i) + dirSep, f))]
@@ -93,7 +96,12 @@ def listBirthday():
             if (cumpleFile != '' and cumpleFile != {} and  isinstance(cumpleFile, dict)):
                 k=0
                 while(k<len(cumpleFile)):
-                    birthdayList[list(cumpleFile.keys())[k]] =  list(cumpleFile.values())[k].split(":")[0] + ":" + (onlyfiles[j].replace(".pkl", "")+'/'+str(i)+'/'+list(cumpleFile.values())[k].split(":")[1])
+                    if Order:
+                        birthdayList.append(list(cumpleFile.values())[k].split(":")[0] +
+                        ":" + (onlyfiles[j].replace(".pkl", "")+'/'+str(i)+'/'+list(cumpleFile.values())[k].split(":")[1]) +
+                        ":" + [list(cumpleFile.keys())[k]])
+                    else:
+                        birthdayList[list(cumpleFile.keys())[k]] =  list(cumpleFile.values())[k].split(":")[0] + ":" + (onlyfiles[j].replace(".pkl", "")+'/'+str(i)+'/'+list(cumpleFile.values())[k].split(":")[1])
                     k+=1
             j+=1
         i+=1

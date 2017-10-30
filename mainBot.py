@@ -265,7 +265,6 @@ dispatcher.add_handler(changelog_handler)
 
 
 schedule.every().day.at("08:00").do(happybirthday,False)
-schedule.every().day.at("12:00").do(happybirthday,False)
 schedule.every().day.at("20:00").do(happybirthday,True)
 
 

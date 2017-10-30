@@ -88,11 +88,9 @@ def listBirthday(Order):
     i = 1
     while(i<13):
         onlyfiles = [f for f in listdir(mainDirectory + str(i) + dirSep) if not f.startswith('.') and f != "" and isfile(join(mainDirectory + str(i) + dirSep, f))]
-        print(onlyfiles+'\n--------\n')
         j=0
         while(j<len(onlyfiles)):
             cumpleFile = db.load_obj(mainDirectory + dirSep + str(i) + dirSep + onlyfiles[j])
-            print(cumpleFile)
             if (cumpleFile != '' and cumpleFile != {} and  isinstance(cumpleFile, dict)):
                 k=0
                 while(k<len(cumpleFile)):
@@ -105,7 +103,7 @@ def listBirthday(Order):
                     k+=1
             j+=1
         i+=1
-    return (birthdayList if (birthdayList != {}) else None)
+    return (birthdayList if (birthdayList != {} and birthdayList != []) else None)
 
 
 # Create day file if is not created

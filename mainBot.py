@@ -60,7 +60,7 @@ def startWithCommand(bot, update, args=['']):
 	bot.sendMessage(chat_id=chatIDDeveloper, text=message.text.split(' ')[0] + ' ' + ' '.join(args) + ' --> ' + username + " (chat_id:" + str(chat_id) + " , user_id:"+ str(user_id) + ")")
 
 
-#Command /startB or /helpB
+#Command /start or /help
 def startB(bot, update):
 	startWithCommand(bot, update)
 
@@ -249,7 +249,7 @@ updater = Updater(token, workers=200)
 dispatcher = updater.dispatcher
 
 # Initialize "Command" handlers
-start_handler = CommandHandler(list(['startB','helpb']), startB, pass_args=False, allow_edited=True)
+start_handler = CommandHandler(list(['start','help']), startB, pass_args=False, allow_edited=True)
 dispatcher.add_handler(start_handler)
 addB_handler = CommandHandler('birthday', addBirthday, pass_args=True, allow_edited=True)
 dispatcher.add_handler(addB_handler)
@@ -267,7 +267,7 @@ leave_handler = CommandHandler('leaveB', leaveGroup, pass_args=False, allow_edit
 dispatcher.add_handler(leave_handler)
 update_handler = CommandHandler('updateB', updateB, pass_args=False, allow_edited=True)
 dispatcher.add_handler(update_handler)
-changelog_handler = CommandHandler('changelogB', changelogB, pass_args=False, allow_edited=True)
+changelog_handler = CommandHandler('changelog', changelogB, pass_args=False, allow_edited=True)
 dispatcher.add_handler(changelog_handler)
 
 

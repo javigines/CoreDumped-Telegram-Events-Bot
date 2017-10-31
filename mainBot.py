@@ -148,7 +148,7 @@ def listB(bot, update, args=None):
 				i=0
 				newbirthdayString = ""
 				while(i<len(birthdaylist)):
-					newbirthdayString += (str(i+1) + ". " + list(birthdaylist.values())[i].split(":")[0] + "  --->	" + list(birthdaylist.values())[i].split(":")[1] + "\n")
+					newbirthdayString += (str(i+1) + ". " + list(birthdaylist)[i].split(":")[0] + "  --->	" + list(birthdaylist)[i].split(":")[1] + "\n")
 					i+=1
 				birthdaylist = newbirthdayString
 				bot.sendMessage(chat_id=user_id, text=birthdaylist)

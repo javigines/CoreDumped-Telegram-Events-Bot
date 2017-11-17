@@ -88,9 +88,11 @@ def listBirthday(Order):
     i = 1
     while(i<13):
         onlyfiles = [f for f in listdir(mainDirectory + str(i) + dirSep) if not f.startswith('.') and f != "" and isfile(join(mainDirectory + str(i) + dirSep, f))]
+        onlyfiles = [x[:-4] for x in onlyfiles]
+        onlyfiles.sort(key=int)
         j=0
         while(j<len(onlyfiles)):
-            cumpleFile = db.load_obj(mainDirectory + dirSep + str(i) + dirSep + onlyfiles[j])
+            cumpleFile = db.load_obj(mainDirectory + dirSep + str(i) + dirSep + onlyfiles[j] + ".pkl")
             if (cumpleFile != '' and cumpleFile != {} and  isinstance(cumpleFile, dict)):
                 k=0
                 while(k<len(cumpleFile)):

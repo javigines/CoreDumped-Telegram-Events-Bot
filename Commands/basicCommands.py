@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from subprocess import call									## System module
-from os import _exit, getpid								## System module
+from subprocess import call                                    ## System module
+from os import _exit, getpid                                ## System module
 from random import randint
 
 import Functions.basicData as bd
@@ -11,9 +11,9 @@ import Functions.message as ms
 
 #Command /start or /help
 def start(bot, update):
-    bd.startWithCommand(bot, update)
+	bd.startWithCommand(bot, update)
 
-    bot.sendMessage(chat_id=bd.chat_id, text=ms.helpOrStart)
+	bot.sendMessage(chat_id=bd.chat_id, text=ms.helpOrStart)
 
 
 # Command /restartB or /rebootB
@@ -79,6 +79,21 @@ def changelogB(bot, update):
 
 	else:
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.groupChangelogUser)
+
+
+def speak(bot, update, args):
+	bd.startWithCommand(bot, update)
+
+	if bd.user_id == bd.chatIDDeveloper:
+		try:
+			bot.sendMessage(chat_id=args[0], text=' '.join(args).split('|')[1])
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.messageSend)
+		except:
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.incorrectChatId)
+	else:
+		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)])
+
+
 
 
 print("BasicCommands Module Loaded")

@@ -73,6 +73,8 @@ update_handler = CommandHandler('updateB', bc.updateB, pass_args=False, allow_ed
 dispatcher.add_handler(update_handler)
 changelog_handler = CommandHandler('changelog', bc.changelogB, pass_args=False, allow_edited=True)
 dispatcher.add_handler(changelog_handler)
+speak_handler = CommandHandler('speak', bc.speak, pass_args=True, allow_edited=True)
+dispatcher.add_handler(speak_handler)
 
 addB_handler = CommandHandler('birthday', ec.birthdayAdd, pass_args=True, allow_edited=True)
 dispatcher.add_handler(addB_handler)

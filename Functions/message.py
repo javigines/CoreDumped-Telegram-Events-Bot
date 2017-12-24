@@ -19,6 +19,10 @@ leaving = "Hasta Siempre..."
 groupChangelogUser = 'No queremos aburrir a la gente con el listado de cambios, ¿por qué no me lo preguntas por privado mejor?'
 changelog = ('Versión 1.0.2\n\n(WIP)')
 
+# Command /speak
+messageSend = 'Mensaje enviado.'
+incorrectChatId = 'El chat_id indicado no es válido o no tengo acceso a él.'
+
 # General Messages
 errorExecCommandAdmin = 'Error al ejecutar $args1 $args2 --> $args3 (chat_id: $args4 , user_id: $args5 )'
 errorExecCommandUser = 'Ha ocurrido un error y se ha informado de él.'

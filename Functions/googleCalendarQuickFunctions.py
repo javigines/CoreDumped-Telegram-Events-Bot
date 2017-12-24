@@ -12,7 +12,7 @@ from oauth2client.file import Storage
 
 from datetime import datetime
 
-import message
+import Functions.message as ms
 
 try:
     import argparse
@@ -103,7 +103,7 @@ def removeCalendar(calendarID):
 def getEvents(calendarId, dateMin=None, dateMax=None):
 
     service = getService()
-    
+
     if dateMin is None and dateMax is None:
         return service.events().list(calendarId=calendarId).execute()["items"]
     else:
@@ -135,7 +135,7 @@ def createEvent(event, calendarId):
     if checkCalendar(calendarId, 'id'):
         return service.events().insert(calendarId=calendarId, body=event).execute()
     else:
-        return message.calendarAddNotCalendarId
+        return ms.calendarAddNotCalendarId
 
 def removeEvent(eventId, calendarId):
 
@@ -144,6 +144,6 @@ def removeEvent(eventId, calendarId):
         if checkEvent(eventId, calendarId):
             return service.events().delete(calendarId=calendarId, eventId=eventId).execute()
         else:
-            return message.eventNotFound
+            return ms.eventNotFound
     else:
-        return message.calendarNotFound
+        return ms.calendarNotFound

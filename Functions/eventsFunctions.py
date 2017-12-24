@@ -4,6 +4,7 @@
 import Functions.googleCalendarQuickFunctions as gc
 from datetime import datetime, timedelta
 
+
 def translateStringToDatetime(date):
     finaldate = {}
     try:
@@ -166,7 +167,6 @@ def birthdayAddFunction(args, summary):
         }
 
         return gc.createEvent(event=event, calendarId=calendar['id'])
-
 
 def birthdayRemoveFunction(args):
     calendar = gc.checkCalendar("birthdaysCalendar", "summary")

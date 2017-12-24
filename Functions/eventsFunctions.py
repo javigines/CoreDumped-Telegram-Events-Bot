@@ -152,7 +152,7 @@ def birthdayAddFunction(args, summary):
             return 2
 
         event = {
-        'summary': summary,
+        'summary': summary+'|'+date['dateStart'].strftime("%Y"),
         'start': {
             'date': date['dateStart'].strftime("%Y-%m-%d"),
             'timeZone': 'Europe/Madrid',

@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from random import randint
+
 import Functions.basicData as bd
 import Functions.eventsFunctions as ef
 import Functions.message as ms
@@ -36,22 +38,25 @@ def birthdayList(bot, update, args=None):
 def birthdayRemove(bot, update, args=None):
     bd.startWithCommand(bot, update)
 
-    if not bd.user_id is bd.chatIDDeveloper:
-        bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin)
+    if bd.user_id != bd.chatIDDeveloper:
+        bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)])
 
     if not ef.birthdayCheckFunction(str(''.join(args))):
-        bot.sendMessage(chat_id=bd.chat_id, text=ms.removeFailNotUser)
+        bot.sendMessage(chat_id=bd.chat_id,
+        text=ms.removeFailNotUser.replace("$args1", str(''.join(args))))
 
     else:
         result = ef.birthdayRemoveFunction(args=args)
         if(result is None or result == {} or result == [] or result == ""):
-            bot.sendMessage(chat_id=bd.chat_id, text=ms.removeFailNotUser)
+            bot.sendMessage(chat_id=bd.chat_id,
+            text=ms.removeFailNotUser.replace("$args1", str(''.join(args))))
 
         elif(result==1):
             bot.sendMessage(chat_id=bd.chat_id, text=ms.formatErrorRemove)
 
         else:
-            bot.sendMessage(chat_id=bd.chat_id, text=ms.removeBirthdayDone)
+            bot.sendMessage(chat_id=bd.chat_id,
+            text=ms.removeBirthdayDone.replace("$args1", str(''.join(args))))
 
 
 def birthdayAdd(bot, update, args=None):
@@ -72,7 +77,8 @@ def birthdayAdd(bot, update, args=None):
             bot.sendMessage(chat_id=bd.chat_id, text=ms.notValidBirthday)
 
         else:
-            bot.sendMessage(chat_id=bd.chat_id, text=ms.newBirthdayAdded)
+            bot.sendMessage(chat_id=bd.chat_id,
+            text=ms.newBirthdayAdded.replace("$args1", bd.username).replace("$args2", ' '.join(args)))
 
 
 

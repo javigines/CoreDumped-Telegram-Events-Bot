@@ -5,14 +5,14 @@ from subprocess import call									## System module
 from sys import argv										## System module
 from os import _exit, getpid								## System module
 import logging												## System module
-from random import randint									## System module
 from time import gmtime, sleep, strftime					## System module
-from datetime import datetime								## System module
+from datetime import datetime, time							## System module
 
 import schedule												## pip install schedule
-from telegram.ext import Updater, CommandHandler			## pip install python-telegram-bot
+from telegram.ext import Updater, CommandHandler, Job, JobQueue		## pip install python-telegram-bot
 
 import Functions.basicData as bd
+import Functions.reminder as rmr
 import Commands.basicCommands as bc
 import Commands.eventsCommands as ec
 
@@ -76,6 +76,7 @@ dispatcher.add_handler(changelog_handler)
 speak_handler = CommandHandler('speak', bc.speak, pass_args=True, allow_edited=True)
 dispatcher.add_handler(speak_handler)
 
+# eventsFunctions Commands
 addB_handler = CommandHandler('birthday', ec.birthdayAdd, pass_args=True, allow_edited=True)
 dispatcher.add_handler(addB_handler)
 remove_handler = CommandHandler(list(['removeB','deleteB']), ec.birthdayRemove, pass_args=True, allow_edited=True)
@@ -85,9 +86,11 @@ dispatcher.add_handler(list_handler)
 event_handler = CommandHandler('event', ec.birthdayAdd, pass_args=True, allow_edited=True)
 dispatcher.add_handler(event_handler)
 
-schedule.every().day.at("08:00").do(happybirthday,False)
-schedule.every().day.at("20:00").do(happybirthday,True)
 
+#Jobs (Scheduler)
+job_queue = JobQueue(updater.bot)
+job_queue.run_daily(rmr.birthdayReminder, time(hour=8, minute=00, second=00), name='birthdayReminderJob')
+job_queue.start()
 
 updater.start_polling(timeout=30)
 print("MainBot Completly Loaded.\nBot Working...")

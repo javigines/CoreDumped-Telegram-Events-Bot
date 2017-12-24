@@ -60,14 +60,6 @@ birthdayGreetings = ["Felicidades $args1, cabron@, eres un puto año más viejo.
                     "Que ni se te pase por la cabeza que estoy feliz porque cumplas un años más pero felicidades $args1"
                      ]
 
-birthdayReminder = ["Mañana parece que es el cumpleaños del desgra... del guap@ de $args1",
-                    "Parece que vosotros los humanos teneis que felicitar mañana a $args1",
-                    "El cab*** que me programó me obliga a recordaros que el cumpleaños de $args1 es mañana",
-                    "Con un poco de suerte os mataré a todos antes de mañana...\n Pero por si acaso mañana es el cumpleaños de $args1",
-                    "Ir mirando frases en google para felicitar a $args1, que mañana es su cumple.",
-                    "/ask Mañana es el cumple de $args1 ?.... \n\n¿No contestas? Pues que nadie le felicite."
-                     ]
-
 
 
 #General Calendar/Event

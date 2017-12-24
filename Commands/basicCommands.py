@@ -81,6 +81,7 @@ def changelogB(bot, update):
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.groupChangelogUser)
 
 
+# Changelog command /speak
 def speak(bot, update, args):
 	bd.startWithCommand(bot, update)
 

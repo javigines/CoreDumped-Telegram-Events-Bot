@@ -66,7 +66,7 @@ def getCalendars():
 
     service = getService()
 
-    return service.calendarList.list().execute()["items"]
+    return service.calendarList().list().execute()["items"]
 
 def checkCalendar(calendarData, calendarParam):
 
@@ -82,7 +82,7 @@ def createCalendar(calendarSettings):
     service = getService()
 
     if not checkCalendar(calendarSettings["summary"], "summary"):
-        return service.calendars.insert(body=calendarSettings).execute()
+        return service.calendars().insert(body=calendarSettings).execute()
     return False
 
 def removeCalendar(calendarID):
@@ -90,11 +90,11 @@ def removeCalendar(calendarID):
     service = getService()
 
     if calendarID == "primary":
-        service.calendars.clear(calendarId=calendarID).execute()
+        service.calendars().clear(calendarId=calendarID).execute()
         return True
     else:
         if checkCalendar(calendarSettings.id):
-            service.calendars.delete(calendarId=calendarID).execute()
+            service.calendars().delete(calendarId=calendarID).execute()
             return True
     return False
 
@@ -103,11 +103,11 @@ def removeCalendar(calendarID):
 def getEvents(calendarId, dateMin=None, dateMax=None):
 
     service = getService()
-
-    if date is None:
-        return service.events().list(calendarId=calendarId, orderBy="startTime").execute()["items"]
+    
+    if dateMin is None and dateMax is None:
+        return service.events().list(calendarId=calendarId).execute()["items"]
     else:
-        return service.events().list(calendarId=calendarId, timeMin=dateMin, timeMax=dateMax, orderBy="startTime").execute()["items"]
+        return service.events().list(calendarId=calendarId, timeMin=dateMin, timeMax=dateMax).execute()["items"]
 
 def checkEvent(eventId, calendarId):
 
@@ -132,16 +132,16 @@ def createEvent(event, calendarId):
 
     calendarList = getCalendars()
 
-    if checkCalendar(calendarId):
-        return service.events.insert(calendarId=calendarId, body=event).execute()
+    if checkCalendar(calendarId, 'id'):
+        return service.events().insert(calendarId=calendarId, body=event).execute()
     else:
         return message.calendarAddNotCalendarId
 
 def removeEvent(eventId, calendarId):
 
     service = getService()
-    if checkCalendar(calendarId):
-        if checkEvent(eventId):
+    if checkCalendar(calendarId, 'id'):
+        if checkEvent(eventId, calendarId):
             return service.events().delete(calendarId=calendarId, eventId=eventId).execute()
         else:
             return message.eventNotFound

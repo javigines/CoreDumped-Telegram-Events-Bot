@@ -12,10 +12,9 @@ from datetime import datetime								## System module
 import schedule												## pip install schedule
 from telegram.ext import Updater, CommandHandler			## pip install python-telegram-bot
 
-import birthdayManager as bm								## Own module
-import message as ms										## Own module
-
+import Functions.basicData as bd
 import Commands.basicCommands as bc
+import Commands.eventsCommands as ec
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.WARNING)
 
@@ -75,14 +74,14 @@ dispatcher.add_handler(update_handler)
 changelog_handler = CommandHandler('changelog', bc.changelogB, pass_args=False, allow_edited=True)
 dispatcher.add_handler(changelog_handler)
 
-addB_handler = CommandHandler('birthday', addBirthday, pass_args=True, allow_edited=True)
+addB_handler = CommandHandler('birthday', ec.birthdayAdd, pass_args=True, allow_edited=True)
 dispatcher.add_handler(addB_handler)
-event_handler = CommandHandler('event', addEvent, pass_args=True, allow_edited=True)
-dispatcher.add_handler(event_handler)
-remove_handler = CommandHandler(list(['removeB','deleteB']), removeB, pass_args=True, allow_edited=True)
+remove_handler = CommandHandler(list(['removeB','deleteB']), ec.birthdayRemove, pass_args=True, allow_edited=True)
 dispatcher.add_handler(remove_handler)
-list_handler = CommandHandler(list(['listB','eventsB']), listB, pass_args=True, allow_edited=True)
+list_handler = CommandHandler(list(['listB','eventsB']), ec.birthdayList, pass_args=True, allow_edited=True)
 dispatcher.add_handler(list_handler)
+event_handler = CommandHandler('event', ec.birthdayAdd, pass_args=True, allow_edited=True)
+dispatcher.add_handler(event_handler)
 
 schedule.every().day.at("08:00").do(happybirthday,False)
 schedule.every().day.at("20:00").do(happybirthday,True)
@@ -90,7 +89,7 @@ schedule.every().day.at("20:00").do(happybirthday,True)
 
 updater.start_polling(timeout=30)
 print("MainBot Completly Loaded.\nBot Working...")
-updater.bot.sendMessage(chat_id=chatIDDeveloper, text="Bot Iniciado")
+updater.bot.sendMessage(chat_id=bd.chatIDDeveloper, text="Bot Iniciado")
 
 try:
 	while 1:

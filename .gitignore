@@ -103,3 +103,4 @@ ENV/
 *.pkl
 *.txt
 .credentials/
+client_secret.json

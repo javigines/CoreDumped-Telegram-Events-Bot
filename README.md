@@ -6,9 +6,11 @@ Needed Python Modules:
 	Telegram Official Python Bot Api:
 	pip3 install python-telegram-bot
 
-	Scheduler for Events Alerts:
-	pip3 install schedule
-	
+	Google Calendar Api Module (+ Fix with warning in oauth2client):
+	pip3 install --upgrade google-api-python-client
+	pip3 uninstall -y oauth2client
+	pip3 install oauth2client==3.0.0
+
 
 Needed extra file "token.txt" in main bot directory with bot token Key on first line
 

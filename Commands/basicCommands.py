@@ -8,8 +8,8 @@ from subprocess import call									## System module
 from os import _exit, getpid								## System module
 from random import randint									## System module
 
-import Functions.basicData as bd
-import Functions.message as ms
+import Functions.basicData as bd							## Own module
+import Functions.message as ms								## Own module
 
 
 #Command /start or /help
@@ -19,7 +19,7 @@ def start(bot, update):
 	bot.sendMessage(chat_id=bd.chat_id, text=ms.helpOrStart)
 
 
-# Command /restartB or /rebootB
+# Command /restartP or /rebootP
 def restartB(bot, update):
 	bd.startWithCommand(bot, update)
 
@@ -31,7 +31,7 @@ def restartB(bot, update):
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)])
 
 
-# Command /stopB
+# Command /stopP
 def stopB(bot, update):
 	bd.startWithCommand(bot, update)
 
@@ -43,7 +43,7 @@ def stopB(bot, update):
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)])
 
 
-# Command /updateB
+# Command /updateP
 def updateB(bot, update):
 	bd.startWithCommand(bot, update)
 
@@ -61,7 +61,7 @@ def updateB(bot, update):
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)])
 
 
-# Leave the group /leaveB
+# Leave the group /leave
 def leaveGroup(bot, update):
 	bd.startWithCommand(bot, update)
 

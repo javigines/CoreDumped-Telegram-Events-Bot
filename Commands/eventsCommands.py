@@ -4,15 +4,16 @@
 import logging												## System module
 log = logging.getLogger(__name__)
 
-from random import randint
-from datetime import datetime
-from pytz import timezone
+from random import randint									## System module
+from datetime import datetime								## System module
+from pytz import timezone									## pip install pytz
 
-import Functions.basicData as bd
-import Functions.eventsFunctions as ef
-import Functions.message as ms
+import Functions.basicData as bd							## Own module
+import Functions.eventsFunctions as ef						## Own module
+import Functions.message as ms                              ## Own module
 
 
+# Command /birthdayList
 def birthdayList(bot, update, args=None):
     bd.startWithCommand(bot, update, args)
 
@@ -39,6 +40,7 @@ def birthdayList(bot, update, args=None):
             else:
                 bot.sendMessage(chat_id=bd.chat_id, text=formatedEventList)
 
+# Command /removeB
 def birthdayRemove(bot, update, args=None):
     bd.startWithCommand(bot, update, args)
 
@@ -63,6 +65,7 @@ def birthdayRemove(bot, update, args=None):
                 bot.sendMessage(chat_id=bd.chat_id,
                 text=ms.removeBirthdayDone.replace("$args1", str(''.join(args))))
 
+# Command /birthday
 def birthdayAdd(bot, update, args=None):
     bd.startWithCommand(bot, update, args)
 
@@ -85,7 +88,7 @@ def birthdayAdd(bot, update, args=None):
             text=ms.newBirthdayAdded.replace("$args1", bd.username).replace("$args2", ' '.join(args)))
 
 
-# /event Título del Evento | Fecha del Evento con Hora y Duración (17/06/2017 18:45 +04:30) | Impartido por(Opcional) | Descripción del Evento (Opcional) | Precio del Evento (Opcional)
+# Command /eventList
 def eventList(bot, update, args=None):
     bd.startWithCommand(bot, update, args)
 
@@ -113,6 +116,7 @@ def eventList(bot, update, args=None):
             else:
                 bot.sendMessage(chat_id=bd.chat_id, text=formatedEventList)
 
+# Command /removeE
 def eventRemove(bot, update, args=None):
     bd.startWithCommand(bot, update, args)
 
@@ -137,6 +141,7 @@ def eventRemove(bot, update, args=None):
                 bot.sendMessage(chat_id=bd.chat_id,
                 text=ms.removeEventDone.replace("$args1", str(''.join(args))))
 
+# Command /event
 def eventAdd(bot, update, args=None):
     bd.startWithCommand(bot, update, args)
 
@@ -156,12 +161,13 @@ def eventAdd(bot, update, args=None):
             bot.sendMessage(chat_id=bd.chat_id, text=ms.newEventAdded.replace("$args1", result['summary']).replace("$args2", date))
 
 
+# Internal Command /info_***
 def eventInfo(bot, update, groups=None):
     bd.startWithCommand(bot, update, groups)
 
     event = ef.eventInfoFunction(bd.message.text.split(' ')[0][6:])
 
-    if(event is None or event == {} or event == [] or event == ""):
+    if(not event or event is None or event == {} or event == [] or event == ""):
         bot.sendMessage(chat_id=bd.chat_id, text=ms.eventNotFound)
 
     else:

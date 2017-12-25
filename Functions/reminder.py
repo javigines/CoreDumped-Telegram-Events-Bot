@@ -4,13 +4,14 @@
 import logging												## System module
 log = logging.getLogger(__name__)
 
-from datetime import datetime, timedelta
-from pytz import timezone
-from random import randint
+from datetime import datetime, timedelta					## System module
+from random import randint									## System module
+from pytz import timezone									## pip install pytz
 
-import Functions.basicData as bd
-import Functions.eventsFunctions as ef
-import Functions.message as ms
+import Functions.basicData as bd							## Own module
+import Functions.eventsFunctions as ef						## Own module
+import Functions.message as ms								## Own module
+
 
 def birthdayReminder(bot, job):
 
@@ -41,5 +42,6 @@ def eventReminder(bot, job):
 
 		bot.sendMessage(chat_id=bd.chatIDDeveloper, text=eventMessage.replace('$args1', eventTempMessage))
 		#bot.sendMessage(chat_id=bd.chatIDCoreDumped, text=eventMessage.replace('$args1', eventTempMessage))
+
 
 log.info('Reminder Module Loaded.')

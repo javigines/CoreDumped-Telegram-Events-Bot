@@ -4,9 +4,10 @@
 import logging												## System module
 log = logging.getLogger(__name__)
 
-import Functions.googleCalendarQuickFunctions as gc
-from datetime import datetime, timedelta
-from pytz import timezone
+from datetime import datetime, timedelta					## System module
+from pytz import timezone									## pip install pytz
+
+import Functions.googleCalendarQuickFunctions as gc			## Own module
 
 
 def translateStringToDatetime(date):

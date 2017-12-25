@@ -11,6 +11,9 @@ Needed Python Modules:
 	pip3 uninstall -y oauth2client
 	pip3 install oauth2client==3.0.0
 
+	Timezones:
+	pip3 install pytz
+
 
 Needed extra file "token.txt" in main bot directory with bot token Key on first line
 

@@ -108,15 +108,15 @@ def getEvents(calendarId, dateMin=None, dateMax=None):
     service = getService()
 
     if dateMin is None and dateMax is None:
-        return service.events().list(calendarId=calendarId, timeMin=datetime(year=datetime.now().year, month=1, day=1).strftime('%Y-%m-%dT00:00:00Z'), timeMax=datetime(year=datetime.now().year+1, month=1, day=1).strftime('%Y-%m-%dT00:00:00Z'), orderBy="startTime", singleEvents=True).execute()["items"]
+        return service.events().list(calendarId=calendarId, timeMin=datetime(year=datetime.now().year, month=1, day=1).strftime('%Y-%m-%dT00:00:00Z'), timeMax=datetime(year=datetime.now().year+1, month=1, day=1).strftime('%Y-%m-%dT00:00:00Z'), orderBy="startTime", singleEvents=True, maxResults=2500).execute()["items"]
     else:
-        return service.events().list(calendarId=calendarId, timeMin=dateMin, timeMax=dateMax, orderBy="startTime", singleEvents=True).execute()["items"]
+        return service.events().list(calendarId=calendarId, timeMin=dateMin, timeMax=dateMax, orderBy="startTime", singleEvents=True, maxResults=2500).execute()["items"]
 
 def checkEvent(eventId, calendarId):
 
     service = getService()
 
-    eventList = getEvents(calendarId)
+    eventList = getEvents(calendarId=calendarId, dateMin="1950-1-1T00:00:00Z", dateMax="2050-1-1T00:00:00Z")
 
     for event in eventList:
         if eventId in event["id"]:
@@ -124,8 +124,6 @@ def checkEvent(eventId, calendarId):
 
     return False
 
-#event {dateStart:"dd/mm/AAAA XX:XX:XX", name="Evento X", repeat:1, reminder={20,120}}
-#repeat: 0=Never, 1=Daily, 2=Weekly, 3=Monthly, 4=Yearly  // reminder=time in sec before date
 def createEvent(event, calendarId):
 
     service = getService()

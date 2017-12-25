@@ -6,6 +6,7 @@ log = logging.getLogger(__name__)
 
 import Functions.googleCalendarQuickFunctions as gc
 from datetime import datetime, timedelta
+from pytz import timezone
 
 
 def translateStringToDatetime(date):
@@ -80,8 +81,39 @@ def translateStringToDatetime(date):
 
                 return finaldate
 
-        elif(len(date.split("-"))==3 or len(date.split("/"))==3 or
-            len(date.split("."))==3):
+        elif(len(date.split(" "))==3):
+            dateTemp = None
+            time = None
+            duration = None
+
+            if '.' in date.split(" ")[0]:
+                dateTemp = "/".join(date.split(" ")[0].split("."))
+            elif '-' in date.split(" ")[0]:
+                dateTemp = "/".join(date.split(" ")[0].split("-"))
+            else:
+                dateTemp = date.split(" ")[0]
+
+            if '.' in date.split(" ")[1]:
+                time = ":".join(date.split(" ")[1].split("."))
+            elif '-' in date.split(" ")[1]:
+                time = ":".join(date.split(" ")[1].split("-"))
+            else:
+                time = date.split(" ")[1]
+
+            if '.' in date.split(" ")[2]:
+                duration = int(date.split(" ")[2].replace('+','').split(".")[0])*60 + int(date.split(" ")[2].split(".")[1])
+            elif '-' in date.split(" ")[2]:
+                duration = int(date.split(" ")[2].replace('+','').split("-")[0])*60 + int(date.split(" ")[2].split("-")[1])
+            elif ':' in date.split(" ")[2]:
+                duration = int(date.split(" ")[2].replace('+','').split(":")[0])*60 + int(date.split(" ")[2].split(":")[1])
+
+            finaldate["dateStart"] = timezone('Europe/Madrid').localize(datetime.strptime(dateTemp+' '+time, '%d/%m/%Y %H:%M'))
+            finaldate["dateEnd"] = timezone('Europe/Madrid').localize(datetime.strptime(dateTemp+' '+time, '%d/%m/%Y %H:%M') + timedelta(minutes=duration))
+
+            return finaldate
+
+        elif(len(date.split(" "))==1 and (len(date.split("-"))==3 or len(date.split("/"))==3 or
+            len(date.split("."))==3)):
             date = "/".join(date.split("."))
             date = "/".join(date.split("-"))
             finaldate["dateStart"] = datetime.strptime(date, '%d/%m/%Y')
@@ -94,7 +126,8 @@ def translateStringToDatetime(date):
 
         return finaldate
 
-    except:
+    except Exception as e:
+        log.info(str(e))
         finaldate["dateStart"] = None
         finaldate["dateEnd"] = None
 
@@ -134,6 +167,26 @@ def birthdayCheckFunction(user_id):
             return True
     return False
 
+def birthdayRemoveFunction(args):
+    calendar = gc.checkCalendar("birthdaysCalendar", "summary")
+
+    if not calendar:
+        newCalendar = {}
+        newCalendar["summary"] = "birthdaysCalendar"
+
+        calendar = gc.createCalendar(newCalendar)
+        return None
+
+
+    if args is None or args == '' or args == []:
+        return 1
+    else:
+        eventList = gc.getEvents(calendar['id'])
+        for event in eventList:
+            if ''.join(args) in event['summary']:
+                gc.removeEvent(event['id'].split("_")[0], calendar['id'])
+                return 200
+
 def birthdayAddFunction(args, summary):
     calendar = gc.checkCalendar("birthdaysCalendar", "summary")
 
@@ -171,12 +224,51 @@ def birthdayAddFunction(args, summary):
 
         return gc.createEvent(event=event, calendarId=calendar['id'])
 
-def birthdayRemoveFunction(args):
-    calendar = gc.checkCalendar("birthdaysCalendar", "summary")
+
+def eventListFunction(args=None):
+    date = {"dateStart":None, "dateEnd":None}
+    calendar = gc.checkCalendar("eventsCalendar", "summary")
 
     if not calendar:
         newCalendar = {}
-        newCalendar["summary"] = "birthdaysCalendar"
+        newCalendar["summary"] = "eventsCalendar"
+
+        calendar = gc.createCalendar(newCalendar)
+        return None
+
+    if args is None or args == '' or args == []:
+        eventList = gc.getEvents(calendar['id'])
+    else:
+        if(''.join(args).find("|") != -1):
+            date["dateStart"] = translateStringToDatetime(date=''.join(args).split("|")[0])["dateStart"]
+            date["dateEnd"] = translateStringToDatetime(date=''.join(args).split("|")[1])["dateStart"]
+        else:
+            date = translateStringToDatetime(date=''.join(args))
+
+        if(date['dateStart']==None or date['dateEnd']==None):
+            return 1
+
+        eventList = gc.getEvents(calendar['id'], date["dateStart"].strftime("%Y-%m-%dT%XZ"), date["dateEnd"].strftime("%Y-%m-%dT%XZ"))
+    return eventList
+
+def eventCheckFunction(event_id):
+    calendar = gc.checkCalendar("eventsCalendar", "summary")
+
+    if not calendar:
+        newCalendar = {}
+        newCalendar["summary"] = "eventsCalendar"
+
+        calendar = gc.createCalendar(newCalendar)
+        return False
+
+    return gc.checkEvent(eventId=event_id, calendarId=calendar['id'])
+
+def eventRemoveFunction(args):
+    calendar = gc.checkCalendar("eventsCalendar", "summary")
+
+    if not calendar:
+        newCalendar = {}
+        newCalendar["summary"] = "eventsCalendar"
 
         calendar = gc.createCalendar(newCalendar)
         return None
@@ -185,11 +277,53 @@ def birthdayRemoveFunction(args):
     if args is None or args == '' or args == []:
         return 1
     else:
-        eventList = gc.getEvents(calendar['id'])
-        for event in eventList:
-            if ''.join(args) in event['summary']:
-                gc.removeEvent(event['id'].split("_")[0], calendar['id'])
-                return 200
+        gc.removeEvent(''.join(args), calendar['id'])
+        return 200
+
+def eventAddFunction(args, data):
+    calendar = gc.checkCalendar("eventsCalendar", "summary")
+
+    if not calendar:
+        newCalendar = {}
+        newCalendar["summary"] = "eventsCalendar"
+
+        calendar = gc.createCalendar(newCalendar)
+
+
+    if ((args is None) or (args == '') or (args == []) or (len((' '.join(args)).split('|'))!=5) or
+    (' '.join(args).split('|')[0].strip() == "") or (' '.join(args).split('|')[1].strip() == "")):
+        return None
+    else:
+        date = translateStringToDatetime(date=(' '.join(args)).split('|')[1].strip())
+
+        if(date['dateStart']==None or date['dateEnd']==None):
+            return 1
+
+        event = {
+        'summary': (' '.join(args)).split('|')[0],
+        'description': '|/|'.join((' '.join(args)).split('|')[2:]) + '/&/' + data,
+        'start': {
+            'dateTime': date['dateStart'].astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"),
+            },
+        'end': {
+            'dateTime': date['dateEnd'].astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"),
+            },
+        }
+
+        return gc.createEvent(event=event, calendarId=calendar['id'])
+
+
+def eventInfoFunction(eventId):
+    calendar = gc.checkCalendar("eventsCalendar", "summary")
+
+    if not calendar:
+        newCalendar = {}
+        newCalendar["summary"] = "eventsCalendar"
+
+        calendar = gc.createCalendar(newCalendar)
+        return None
+
+    return gc.checkEvent(eventId, calendar['id'])
 
 
 log.info('EventsFunctions Module Loaded.')

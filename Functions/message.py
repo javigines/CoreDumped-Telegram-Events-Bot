@@ -37,22 +37,39 @@ notAdmin = ['No intentes hacer lo que no debes.',
 
 
 
-# Command /listB
-groupListUser = "Pídeme el listado de cumpleaños por privado o no podré mandartelo.\n\n@CoreDumped_EventsBot"
+# Command /eventList && /birthdayList
+groupListUser = "Pídeme el listado por privado para evitar hacer spam aquí.\n\n@CoreDumped_EventsBot"
 noBirthdaySaved = "No tengo ningún cumpleaños guardado."
+noEventSaved = "No tengo ningún evento guardado."
 
 # Command /birthday
-notDate = 'Tienes que escribir una fecha despues del comando.'
+notDate = 'Tienes que escribir una fecha.'
 formatErrorBirthday = 'No me estás enviando tu cumpleaños bien.\nEl formato es: "dd/mm/AAAA\n\n'
 askForDelete = 'Ya he guardado tu cumpleaños.\nPide a @javigines que lo borre si no es correcto.'
 newBirthdayAdded = 'Perfecto, he guardado tu cumple $args1 en la fecha: $args2'
 notValidBirthday = 'Cumpleaños no válido.'
 
+# Command /event
+notDateTitle = 'Tienes que escribir un título y una fecha.'
+formatErrorEvent = ('No me estás enviando el nuevo evento bien. El formato es:\n'+
+                    '\n/event Título del Evento | Fecha del Evento con Hora y Duración (17/06/2017 18:45 +04:30) | Impartido por(Opcional) | Descripción del Evento (Opcional) | Precio del Evento (Opcional)\n\n'+
+                    'Campos opcionales no usados dejarlos en blanco pero con los separadores |')
+newEventAdded = 'Perfecto, he guardado el evento $args1 en la fecha: $args2'
+
 # Command /deleteB or /removeB
 removeBirthdayDone = 'Cumpleaños de $args1 borrado correctamente.'
 removeFailNotUser = 'No tengo el cumpleaños de $args1 en mi agenda.'
-formatErrorRemove = 'No has introducido /removeB correctamente.'
+formatErrorRemoveB = 'No has introducido /removeB correctamente.'
 
+# Command /deleteE or /removeE
+removeEventDone = 'Evento $args1 borrado correctamente.'
+removeFailNotEvent = 'No tengo el evento $args1 en mi calendario.'
+formatErrorRemoveE = 'No has introducido /removeE correctamente.'
+
+
+# Command /info_***
+eventDescription = ("El evento $args1 se celebrará el día $args2\n" +
+                    "Descripción: $args3\nImpartido por: $args4\n\nPrecio: $args5\n\nId Evento: $args6")
 
 # Greetings Birthday
 birthdayGreetings = ["Felicidades $args1, cabron@, eres un puto año más viejo. ",
@@ -65,6 +82,11 @@ birthdayGreetings = ["Felicidades $args1, cabron@, eres un puto año más viejo.
                     "Que cumplas muchos más $args1 pero por favor un poco más rápido, que se me está haciendo muy largo.",
                     "Que ni se te pase por la cabeza que estoy feliz porque cumplas un años más pero felicidades $args1"
                      ]
+
+# Events reminder
+eventsReminderWeekly = 'El listado de eventos de esta próxima semana es:\n\n$args1'
+eventsReminderDaily = 'El listado de eventos del día de hoy es:\n\n$args1'
+eventReminder = 'Evento: $args1\nFecha: $args2\nMore Info: $args3'
 
 
 

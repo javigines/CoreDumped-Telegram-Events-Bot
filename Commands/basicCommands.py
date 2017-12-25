@@ -20,7 +20,7 @@ def start(bot, update):
 
 
 # Command /restartP or /rebootP
-def restartB(bot, update):
+def restartP(bot, update):
 	bd.startWithCommand(bot, update)
 
 	if bd.user_id == bd.chatIDDeveloper:
@@ -32,7 +32,7 @@ def restartB(bot, update):
 
 
 # Command /stopP
-def stopB(bot, update):
+def stopP(bot, update):
 	bd.startWithCommand(bot, update)
 
 	if bd.user_id == bd.chatIDDeveloper:
@@ -44,7 +44,7 @@ def stopB(bot, update):
 
 
 # Command /updateP
-def updateB(bot, update):
+def updateP(bot, update):
 	bd.startWithCommand(bot, update)
 
 	if bd.user_id == bd.chatIDDeveloper:
@@ -74,7 +74,7 @@ def leaveGroup(bot, update):
 
 
 # Changelog command /changelog
-def changelogB(bot, update):
+def changelog(bot, update):
 	bd.startWithCommand(bot, update)
 
 	if bd.user_id == bd.chatIDDeveloper or bd.user_id == bd.chat_id:

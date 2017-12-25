@@ -32,7 +32,7 @@ def birthdayList(bot, update, args=None):
             formatedEventList += (str(lap) + '. ' + event['summary'].split('|')[0] + ': ' + event['summary'].split('|')[2] +
             '-' + event['start']['date'].split("-")[1] + '-' + event['start']['date'].split("-")[2] + '\n')
             lap += 1
-        if bd.user_id == bd.chatIDDeveloper:
+        if bd.user_id == bd.chatIDDeveloper or bd.user_id in bd.adminTelegramId:
             bot.sendMessage(chat_id=bd.chat_id, text=formatedEventList)
         else:
             if(bd.chat_id != bd.user_id):
@@ -44,7 +44,7 @@ def birthdayList(bot, update, args=None):
 def birthdayRemove(bot, update, args=None):
     bd.startWithCommand(bot, update, args)
 
-    if bd.user_id != bd.chatIDDeveloper:
+    if bd.user_id != bd.chatIDDeveloper and bd.user_id not in bd.adminTelegramId:
         bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)])
 
     else:
@@ -108,7 +108,7 @@ def eventList(bot, update, args=None):
             formatedEventList += (str(lap) + '. ' + event['summary'] + ': ' + date +
             '\nMore Info: /info_' + event['id'] + '\n\n')
             lap += 1
-        if bd.user_id == bd.chatIDDeveloper:
+        if bd.user_id == bd.chatIDDeveloper or bd.user_id in bd.adminTelegramId:
             bot.sendMessage(chat_id=bd.chat_id, text=formatedEventList)
         else:
             if(bd.chat_id != bd.user_id):
@@ -120,7 +120,7 @@ def eventList(bot, update, args=None):
 def eventRemove(bot, update, args=None):
     bd.startWithCommand(bot, update, args)
 
-    if bd.user_id != bd.chatIDDeveloper:
+    if bd.user_id != bd.chatIDDeveloper and bd.user_id not in bd.adminTelegramId:
         bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)])
 
     else:
@@ -145,7 +145,7 @@ def eventRemove(bot, update, args=None):
 def eventAdd(bot, update, args=None):
     bd.startWithCommand(bot, update, args)
 
-    if bd.user_id != bd.chatIDDeveloper:
+    if bd.user_id != bd.chatIDDeveloper and bd.user_id not in bd.adminTelegramId:
         bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)])
 
     else:

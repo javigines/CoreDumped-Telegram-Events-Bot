@@ -1,55 +1,30 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import logging												## System module
+import os
+logging.basicConfig(filename=os.path.dirname(os.path.abspath(__file__)) + os.sep+'/.logs/logCoreBot.log',format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logging.info(('-'*30)+' Bot Starting '+('-'*30))
+
 from subprocess import call									## System module
 from sys import argv										## System module
-from os import _exit, getpid								## System module
-import logging												## System module
-from time import gmtime, sleep, strftime					## System module
+from time import sleep										## System module
 from datetime import datetime, time							## System module
 
-import schedule												## pip install schedule
-from telegram.ext import Updater, CommandHandler, Job, JobQueue		## pip install python-telegram-bot
+from telegram.ext import Updater, CommandHandler, JobQueue	## pip install python-telegram-bot
 
 import Functions.basicData as bd
 import Functions.reminder as rmr
 import Commands.basicCommands as bc
 import Commands.eventsCommands as ec
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.WARNING)
 
 # Usefull for /restartB
 if(len(argv)>1):
 	sleep(2)
 	call("kill -9 " + str(argv[1]), shell=True)
+	logging.info('Bot restarting complete.')
 	sleep(2)
-
-# Validate date format
-def validate(date_text):
-	try:
-		return datetime.strptime(date_text, '%d/%m/%Y')
-	except:
-		return False
-
-# Greetings or reminder
-def happybirthday(before):
-	data = bm.nextBirthday(before)
-	i=0;
-	if data is not None:
-		while i<len(data):
-			if not before:
-				birthdaySentences = ms.birthdayGreetings
-
-			else:
-				birthdaySentences = ms.birthdayReminder
-
-			updater.bot.sendMessage(chat_id=chatIDDeveloper,
-			 text=birthdaySentences[randint(0, len(birthdaySentences)-1)].replace("$args1", data[i].split(":")[1]).replace("$args2", str(int(strftime('%Y', gmtime()))-int(data[i].split(":")[2]))))
-			updater.bot.sendMessage(chat_id=chatIDCoreDumped,
-			 text=birthdaySentences[randint(0, len(birthdaySentences)-1)].replace("$args1", data[i].split(":")[1]).replace("$args2", str(int(strftime('%Y', gmtime()))-int(data[i].split(":")[2]))))
-			i+=1
-
-
 
 
 token_file = open("token.txt", 'r')
@@ -61,6 +36,7 @@ dispatcher = updater.dispatcher
 
 # Initialize "Command" handlers
 # Basic Commands
+
 start_handler = CommandHandler(list(['start','help']), bc.start, pass_args=False, allow_edited=True)
 dispatcher.add_handler(start_handler)
 restart_handler = CommandHandler(list(['restartB','rebootB']), bc.restartB, pass_args=False, allow_edited=True)
@@ -75,6 +51,7 @@ changelog_handler = CommandHandler('changelog', bc.changelogB, pass_args=False, 
 dispatcher.add_handler(changelog_handler)
 speak_handler = CommandHandler('speak', bc.speak, pass_args=True, allow_edited=True)
 dispatcher.add_handler(speak_handler)
+logging.info('Basic commands loaded correctly.')
 
 # eventsFunctions Commands
 addB_handler = CommandHandler('birthday', ec.birthdayAdd, pass_args=True, allow_edited=True)
@@ -85,23 +62,20 @@ list_handler = CommandHandler(list(['listB','eventsB']), ec.birthdayList, pass_a
 dispatcher.add_handler(list_handler)
 event_handler = CommandHandler('event', ec.birthdayAdd, pass_args=True, allow_edited=True)
 dispatcher.add_handler(event_handler)
+logging.info('Events commands loaded correctly.')
 
 
 #Jobs (Scheduler)
 job_queue = JobQueue(updater.bot)
 job_queue.run_daily(rmr.birthdayReminder, time(hour=8, minute=00, second=00), name='birthdayReminderJob')
 job_queue.start()
+logging.info('Jobs loaded correctly.')
+
 
 updater.start_polling(timeout=30)
-print("MainBot Completly Loaded.\nBot Working...")
+
+logging.info('MainBot Completly Loaded.')
+logging.info('Bot Working.')
 updater.bot.sendMessage(chat_id=bd.chatIDDeveloper, text="Bot Iniciado")
 
-try:
-	while 1:
-		schedule.run_pending()
-		sleep(1)
-except (KeyboardInterrupt, TypeError):
-	print("Exception")
-finally:
-	updater.idle()
-	print("\nBot Stoped\nShuting down...")
+updater.idle()

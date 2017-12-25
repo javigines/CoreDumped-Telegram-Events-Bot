@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import logging												## System module
+log = logging.getLogger(__name__)
+
 from datetime import datetime
 from random import randint
 
@@ -18,3 +21,6 @@ def birthdayReminder(bot, job):
 				text=ms.birthdayGreetings[randint(0, len(ms.birthdayGreetings)-1)].replace("$args1", event['summary'].split('|')[0]).replace("$args2", str(int(datetime.now().strftime('%Y'))-int(event['summary'].split('|')[2]))))
 			bot.sendMessage(chat_id=bd.chatIDCoreDumped,
 				text=ms.birthdayGreetings[randint(0, len(ms.birthdayGreetings)-1)].replace("$args1", event['summary'].split('|')[0]).replace("$args2", str(int(datetime.now().strftime('%Y'))-int(event['summary'].split('|')[2]))))
+
+
+log.info('Reminder Module Loaded.')

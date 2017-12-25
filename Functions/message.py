@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import logging												## System module
+log = logging.getLogger(__name__)
+
 
 # Command /help or /start
 helpOrStart = 'Para añadir tu cumpleaños escribe:\n/birthday 23/01/1997'
@@ -70,3 +76,6 @@ dateUnknown = "No se reconoce la fecha que has enviado."
 
 #CalendarAdd
 calendarAddNotCalendarId = "El ID del calendario no existe en tu lista de calendarios"
+
+
+log.info('Message Module Loaded.')

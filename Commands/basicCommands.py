@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from subprocess import call                                    ## System module
-from os import _exit, getpid                                ## System module
-from random import randint
+import logging												## System module
+log = logging.getLogger(__name__)
+
+from subprocess import call									## System module
+from os import _exit, getpid								## System module
+from random import randint									## System module
 
 import Functions.basicData as bd
 import Functions.message as ms
@@ -97,4 +100,4 @@ def speak(bot, update, args):
 
 
 
-print("BasicCommands Module Loaded")
+log.info('BasicCommands Module Loaded.')

@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 from __future__ import print_function
+
+import logging												## System module
+log = logging.getLogger(__name__)
+
 import httplib2
 import os
 
@@ -147,3 +150,6 @@ def removeEvent(eventId, calendarId):
             return ms.eventNotFound
     else:
         return ms.calendarNotFound
+
+
+log.info('GoogleCalendarQuickFunctions Module Loaded.')

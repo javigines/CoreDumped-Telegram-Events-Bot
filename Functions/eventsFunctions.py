@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import logging												## System module
+log = logging.getLogger(__name__)
+
 import Functions.googleCalendarQuickFunctions as gc
 from datetime import datetime, timedelta
 
@@ -187,3 +190,6 @@ def birthdayRemoveFunction(args):
             if ''.join(args) in event['summary']:
                 gc.removeEvent(event['id'], calendar['id'])
                 return 200
+
+
+log.info('EventsFunctions Module Loaded.')

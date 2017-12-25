@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import logging												## System module
+log = logging.getLogger(__name__)
+
 from random import randint
 
 import Functions.basicData as bd
@@ -97,3 +100,6 @@ def eventRemove(bot, update):
 
 def eventAdd(bot, update):
     bd.startWithCommand(bot, update)
+
+
+log.info('EventsCommands Module Loaded.')

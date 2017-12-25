@@ -108,9 +108,9 @@ def getEvents(calendarId, dateMin=None, dateMax=None):
     service = getService()
 
     if dateMin is None and dateMax is None:
-        return service.events().list(calendarId=calendarId).execute()["items"]
+        return service.events().list(calendarId=calendarId, timeMin=datetime(year=datetime.now().year, month=1, day=1).strftime('%Y-%m-%dT00:00:00Z'), timeMax=datetime(year=datetime.now().year+1, month=1, day=1).strftime('%Y-%m-%dT00:00:00Z'), orderBy="startTime", singleEvents=True).execute()["items"]
     else:
-        return service.events().list(calendarId=calendarId, timeMin=dateMin, timeMax=dateMax).execute()["items"]
+        return service.events().list(calendarId=calendarId, timeMin=dateMin, timeMax=dateMax, orderBy="startTime", singleEvents=True).execute()["items"]
 
 def checkEvent(eventId, calendarId):
 

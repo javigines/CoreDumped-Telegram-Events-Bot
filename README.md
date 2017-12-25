@@ -6,7 +6,7 @@ Needed Python Modules:
 	Telegram Official Python Bot Api:
 	pip3 install python-telegram-bot
 
-	Google Calendar Api Module (+ Fix with warning in oauth2client):
+	Google Calendar Api Module (+ Fix warning with newer oauth2client module):
 	pip3 install --upgrade google-api-python-client
 	pip3 uninstall -y oauth2client
 	pip3 install oauth2client==3.0.0

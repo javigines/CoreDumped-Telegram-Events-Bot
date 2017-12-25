@@ -188,7 +188,7 @@ def birthdayRemoveFunction(args):
         eventList = gc.getEvents(calendar['id'])
         for event in eventList:
             if ''.join(args) in event['summary']:
-                gc.removeEvent(event['id'], calendar['id'])
+                gc.removeEvent(event['id'].split("_")[0], calendar['id'])
                 return 200
 
 

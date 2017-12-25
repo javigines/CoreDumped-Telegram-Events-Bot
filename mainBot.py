@@ -36,7 +36,6 @@ dispatcher = updater.dispatcher
 
 # Initialize "Command" handlers
 # Basic Commands
-
 start_handler = CommandHandler(list(['start','help']), bc.start, pass_args=False, allow_edited=True)
 dispatcher.add_handler(start_handler)
 restart_handler = CommandHandler(list(['restartB','rebootB']), bc.restartB, pass_args=False, allow_edited=True)
@@ -53,7 +52,7 @@ speak_handler = CommandHandler('speak', bc.speak, pass_args=True, allow_edited=T
 dispatcher.add_handler(speak_handler)
 logging.info('Basic commands loaded correctly.')
 
-# eventsFunctions Commands
+# EventsFunctions Commands
 addB_handler = CommandHandler('birthday', ec.birthdayAdd, pass_args=True, allow_edited=True)
 dispatcher.add_handler(addB_handler)
 remove_handler = CommandHandler(list(['removeB','deleteB']), ec.birthdayRemove, pass_args=True, allow_edited=True)

@@ -41,7 +41,7 @@ def eventReminder(bot, job):
 			eventTempMessage += ms.eventReminder.replace('$args1', event['summary']).replace('$args2', date).replace('$args3', '/info_' + event['id']) + '\n\n'
 
 		bot.sendMessage(chat_id=bd.chatIDDeveloper, text=eventMessage.replace('$args1', eventTempMessage))
-		#bot.sendMessage(chat_id=bd.chatIDCoreDumped, text=eventMessage.replace('$args1', eventTempMessage))
+		bot.sendMessage(chat_id=bd.chatIDCoreDumped, text=eventMessage.replace('$args1', eventTempMessage))
 
 
 log.info('Reminder Module Loaded.')

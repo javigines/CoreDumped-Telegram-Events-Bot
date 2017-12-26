@@ -37,7 +37,7 @@ leaving = "Hasta Siempre..."
 
 # Command /changelogB
 groupChangelogUser = 'No queremos aburrir a la gente con el listado de cambios, ¿por qué no me lo preguntas por privado mejor?'
-changelog = ('Versión 2.0.1\n\n(WIP)')
+changelog = ('Versión 2.0.4\n\n(WIP)')
 
 # Command /speak
 messageSend = 'Mensaje enviado.'

@@ -29,8 +29,8 @@ def birthdayList(bot, update, args=None):
         formatedEventList = ''
         lap = 1
         for event in eventList:
-            formatedEventList += (str(lap) + '. ' + event['summary'].split('|')[0] + ': ' + event['summary'].split('|')[2] +
-            '-' + event['start']['date'].split("-")[1] + '-' + event['start']['date'].split("-")[2] + '\n')
+            date = timezone('UTC').localize(datetime.strptime(event['start']['date'], '%Y-%m-%d')).astimezone(timezone('Europe/Madrid')).strftime("%d-%m-")
+            formatedEventList += (str(lap) + '. ' + event['summary'].split('|')[0] + ': ' + date + event['summary'].split('|')[2] + '\n')
             lap += 1
         if bd.user_id == bd.chatIDDeveloper or bd.user_id in bd.adminTelegramId:
             bot.sendMessage(chat_id=bd.chat_id, text=formatedEventList)

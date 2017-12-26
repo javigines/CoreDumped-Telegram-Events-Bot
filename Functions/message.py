@@ -6,20 +6,20 @@ log = logging.getLogger(__name__)
 
 
 # Command /help or /start
-helpOrStart = ('Las funciones y comandos del bot son los siguiente:\n'+
-                '/birthday 23/01/1997 #Añade tu cumpleaños al bot\n'+
-                '/birthdayList (january|18/01/2017|2017)) #Listado de todos los cumpleaños o de los que se encuentren en la fecha.\n'+
-                '/changelog #Últimos cambios en actualizaciones del bot\n'+
-                '/eventList (january|18/01/2017|2017) #Listado de todos los eventos o de los que se encuentren en la fecha.\n'+
-                '/help #Esta ayuda\n'+
+helpOrStart = ('Las funciones y comandos del bot son los siguiente:\n\n'+
+                '/birthday 23/01/1997 - Añade tu cumpleaños al bot\n'+
+                '/birthdayList (january|18/01/2017|2017)) - Listado de todos los cumpleaños o de los que se encuentren en la fecha.\n'+
+                '/changelog - Últimos cambios en actualizaciones del bot\n'+
+                '/eventList (january|18/01/2017|2017) - Listado de todos los eventos o de los que se encuentren en la fecha.\n'+
+                '/help - Esta ayuda\n'+
                 '\n'+
                 'Admin Commands\n'+
-                '/event Título del Evento | Fecha del Evento con Hora y Duración. Formato:(17/06/2017 18:45 +04:30) | (Impartido por) | (Descripción del Evento) | (Precio del Evento)\n\n'+
-                '#En el comando /event campos opcionales no usados dejarlos en blanco pero con los separadores |\n'+
-                '/removeB @Peter #Borra el cumpleaños de la persona definida\n'+
-                '/removeE 5hb3j2442342423 #Borra el evento indicado por el id\n'+
+                '/event Título del Evento | Fecha del Evento con Hora y Duración. Formato:(17/06/2017 18:45 +04:30) | (Impartido por) | (Descripción del Evento) | (Precio del Evento)\n'+
+                '- En el comando /event campos opcionales no usados dejarlos en blanco pero con los separadores |\n'+
+                '/removeB @Peter - Borra el cumpleaños de la persona definida\n'+
+                '/removeE 5hb3j2442342423 - Borra el evento indicado por el id\n'+
                 '\n'+
-                'Todos los parámetros entre paréntesis son opcionales. En el caso de usarlos, no incluir el paréntesis.\n'+
+                'Todos los parámetros entre paréntesis son opcionales. En el caso de usarlos, no incluir el paréntesis.\n'
                 )
 
 #Command /restartB

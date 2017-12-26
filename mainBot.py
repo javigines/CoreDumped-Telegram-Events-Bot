@@ -9,6 +9,13 @@ logging.info(('-'*30)+' Bot Starting '+('-'*30))
 from subprocess import call													## System module
 from sys import argv														## System module
 from time import sleep														## System module
+# Usefull for /restartB
+if(len(argv)>1):
+	sleep(2)
+	call("kill -9 " + str(argv[1]), shell=True)
+	logging.info('Bot restarting complete.')
+	sleep(2)
+
 from datetime import datetime, time											## System module
 
 from telegram.ext import Updater, CommandHandler, RegexHandler, JobQueue	## pip install python-telegram-bot
@@ -17,14 +24,6 @@ import Functions.basicData as bd											## Own module
 import Functions.reminder as rmr											## Own module
 import Commands.basicCommands as bc											## Own module
 import Commands.eventsCommands as ec										## Own module
-
-
-# Usefull for /restartB
-if(len(argv)>1):
-	sleep(2)
-	call("kill -9 " + str(argv[1]), shell=True)
-	logging.info('Bot restarting complete.')
-	sleep(2)
 
 
 token_file = open("token.txt", 'r')

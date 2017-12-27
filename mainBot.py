@@ -49,6 +49,8 @@ changelog_handler = CommandHandler('changelog', bc.changelog, pass_args=False, a
 dispatcher.add_handler(changelog_handler)
 speak_handler = CommandHandler('speak', bc.speak, pass_args=True, allow_edited=True)
 dispatcher.add_handler(speak_handler)
+contact_handler = CommandHandler('contact', bc.contact, pass_args=True, allow_edited=True)
+dispatcher.add_handler(contact_handler)
 logging.info('Basic commands loaded correctly.')
 
 # EventsFunctions Commands

@@ -20,10 +20,10 @@ def birthdayList(bot, update, args=None):
 	eventList = ef.birthdayListFunction(args=args)
 
 	if(eventList is None or eventList == {} or eventList == [] or eventList == ""):
-		bot.sendMessage(chat_id=bd.chat_id, text=ms.noBirthdaySaved)
+		bot.sendMessage(chat_id=bd.chat_id, text=ms.noBirthdaySaved, reply_to_message_id=bd.message.message_id)
 
 	elif(eventList==1):
-	   bot.sendMessage(chat_id=bd.chat_id, text=ms.dateUnknown)
+	   bot.sendMessage(chat_id=bd.chat_id, text=ms.dateUnknown, reply_to_message_id=bd.message.message_id)
 
 	else:
 		formatedEventList = ''
@@ -33,36 +33,36 @@ def birthdayList(bot, update, args=None):
 			formatedEventList += (str(lap) + '. ' + event['summary'].split('|')[0] + ': ' + date + event['summary'].split('|')[2] + '\n')
 			lap += 1
 		if bd.user_id == bd.chatIDDeveloper or bd.user_id in bd.adminTelegramId:
-			bot.sendMessage(chat_id=bd.chat_id, text=formatedEventList)
+			bot.sendMessage(chat_id=bd.chat_id, text=formatedEventList, reply_to_message_id=bd.message.message_id)
 		else:
 			if(bd.chat_id != bd.user_id):
-				bot.sendMessage(chat_id=bd.chat_id, text=ms.groupListUser)
+				bot.sendMessage(chat_id=bd.chat_id, text=ms.groupListUser, reply_to_message_id=bd.message.message_id)
 			else:
-				bot.sendMessage(chat_id=bd.chat_id, text=formatedEventList)
+				bot.sendMessage(chat_id=bd.chat_id, text=formatedEventList, reply_to_message_id=bd.message.message_id)
 
 # Command /removeB
 def birthdayRemove(bot, update, args=None):
 	bd.startWithCommand(bot, update, args)
 
 	if bd.user_id != bd.chatIDDeveloper and bd.user_id not in bd.adminTelegramId:
-		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)])
+		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)
 
 	else:
 		if not ef.birthdayCheckFunction(str(''.join(args))):
-			bot.sendMessage(chat_id=bd.chat_id,
+			bot.sendMessage(chat_id=bd.chat_id, reply_to_message_id=bd.message.message_id,
 			text=ms.removeFailNotUser.replace("$args1", str(''.join(args))))
 
 		else:
 			result = ef.birthdayRemoveFunction(args=args)
 			if(result is None or result == {} or result == [] or result == ""):
-				bot.sendMessage(chat_id=bd.chat_id,
+				bot.sendMessage(chat_id=bd.chat_id, reply_to_message_id=bd.message.message_id,
 				text=ms.removeFailNotUser.replace("$args1", str(''.join(args))))
 
 			elif(result==1):
-				bot.sendMessage(chat_id=bd.chat_id, text=ms.formatErrorRemoveB)
+				bot.sendMessage(chat_id=bd.chat_id, text=ms.formatErrorRemoveB, reply_to_message_id=bd.message.message_id)
 
 			else:
-				bot.sendMessage(chat_id=bd.chat_id,
+				bot.sendMessage(chat_id=bd.chat_id, reply_to_message_id=bd.message.message_id,
 				text=ms.removeBirthdayDone.replace("$args1", str(''.join(args))))
 
 # Command /birthday
@@ -70,21 +70,21 @@ def birthdayAdd(bot, update, args=None):
 	bd.startWithCommand(bot, update, args)
 
 	if ef.birthdayCheckFunction(str(bd.user_id)):
-		bot.sendMessage(chat_id=bd.chat_id, text=ms.askForDelete)
+		bot.sendMessage(chat_id=bd.chat_id, text=ms.askForDelete, reply_to_message_id=bd.message.message_id)
 
 	else:
 		result = ef.birthdayAddFunction(args=args, summary=(bd.username+'|'+str(bd.user_id)))
 		if(result is None or result == {} or result == [] or result == ""):
-			bot.sendMessage(chat_id=bd.chat_id, text=ms.notDate)
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.notDate, reply_to_message_id=bd.message.message_id)
 
 		elif(result==1):
-			bot.sendMessage(chat_id=bd.chat_id, text=ms.formatErrorBirthday)
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.formatErrorBirthday, reply_to_message_id=bd.message.message_id)
 
 		elif(result==2):
-			bot.sendMessage(chat_id=bd.chat_id, text=ms.notValidBirthday)
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.notValidBirthday, reply_to_message_id=bd.message.message_id)
 
 		else:
-			bot.sendMessage(chat_id=bd.chat_id,
+			bot.sendMessage(chat_id=bd.chat_id, reply_to_message_id=bd.message.message_id,
 			text=ms.newBirthdayAdded.replace("$args1", bd.username).replace("$args2", ' '.join(args)))
 
 
@@ -95,10 +95,10 @@ def eventList(bot, update, args=None):
 	eventList = ef.eventListFunction(args=args)
 
 	if(eventList is None or eventList == {} or eventList == [] or eventList == ""):
-		bot.sendMessage(chat_id=bd.chat_id, text=ms.noEventSaved)
+		bot.sendMessage(chat_id=bd.chat_id, text=ms.noEventSaved, reply_to_message_id=bd.message.message_id)
 
 	elif(eventList==1):
-	   bot.sendMessage(chat_id=bd.chat_id, text=ms.dateUnknown)
+	   bot.sendMessage(chat_id=bd.chat_id, text=ms.dateUnknown, reply_to_message_id=bd.message.message_id)
 
 	else:
 		formatedEventList = ''
@@ -109,36 +109,36 @@ def eventList(bot, update, args=None):
 			'\nMore Info: /info_' + event['id'] + '\n\n')
 			lap += 1
 		if bd.user_id == bd.chatIDDeveloper or bd.user_id in bd.adminTelegramId:
-			bot.sendMessage(chat_id=bd.chat_id, text=formatedEventList)
+			bot.sendMessage(chat_id=bd.chat_id, text=formatedEventList, reply_to_message_id=bd.message.message_id)
 		else:
 			if(bd.chat_id != bd.user_id):
-				bot.sendMessage(chat_id=bd.chat_id, text=ms.groupListUser)
+				bot.sendMessage(chat_id=bd.chat_id, text=ms.groupListUser, reply_to_message_id=bd.message.message_id)
 			else:
-				bot.sendMessage(chat_id=bd.chat_id, text=formatedEventList)
+				bot.sendMessage(chat_id=bd.chat_id, text=formatedEventList, reply_to_message_id=bd.message.message_id)
 
 # Command /removeE
 def eventRemove(bot, update, args=None):
 	bd.startWithCommand(bot, update, args)
 
 	if bd.user_id != bd.chatIDDeveloper and bd.user_id not in bd.adminTelegramId:
-		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)])
+		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)
 
 	else:
 		if not ef.eventCheckFunction(str(''.join(args))):
-			bot.sendMessage(chat_id=bd.chat_id,
+			bot.sendMessage(chat_id=bd.chat_id, reply_to_message_id=bd.message.message_id,
 			text=ms.removeFailNotEvent.replace("$args1", str(''.join(args))))
 
 		else:
 			result = ef.eventRemoveFunction(args=args)
 			if(result is None or result == {} or result == [] or result == ""):
-				bot.sendMessage(chat_id=bd.chat_id,
+				bot.sendMessage(chat_id=bd.chat_id, reply_to_message_id=bd.message.message_id,
 				text=ms.removeFailNotEvent.replace("$args1", str(''.join(args))))
 
 			elif(result==1):
-				bot.sendMessage(chat_id=bd.chat_id, text=ms.formatErrorRemoveE)
+				bot.sendMessage(chat_id=bd.chat_id, text=ms.formatErrorRemoveE, reply_to_message_id=bd.message.message_id)
 
 			else:
-				bot.sendMessage(chat_id=bd.chat_id,
+				bot.sendMessage(chat_id=bd.chat_id, reply_to_message_id=bd.message.message_id,
 				text=ms.removeEventDone.replace("$args1", str(''.join(args))))
 
 # Command /event
@@ -146,19 +146,19 @@ def eventAdd(bot, update, args=None):
 	bd.startWithCommand(bot, update, args)
 
 	if bd.user_id != bd.chatIDDeveloper and bd.user_id not in bd.adminTelegramId:
-		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)])
+		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)
 
 	else:
 		result = ef.eventAddFunction(args=args, data=(bd.username+'|/|'+str(bd.user_id)))
 		if(result is None or result == {} or result == [] or result == ""):
-			bot.sendMessage(chat_id=bd.chat_id, text=ms.formatErrorEvent)
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.formatErrorEvent, reply_to_message_id=bd.message.message_id)
 
 		elif(result==1):
-			bot.sendMessage(chat_id=bd.chat_id, text=ms.formatErrorEvent)
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.formatErrorEvent, reply_to_message_id=bd.message.message_id)
 
 		else:
 			date = timezone('UTC').localize(datetime.strptime(result['start']['dateTime'], '%Y-%m-%dT%H:%M:%SZ')).astimezone(timezone('Europe/Madrid')).strftime("%d-%m-%Y %H:%M")
-			bot.sendMessage(chat_id=bd.chat_id, text=ms.newEventAdded.replace("$args1", result['summary']).replace("$args2", date))
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.newEventAdded.replace("$args1", result['summary']).replace("$args2", date), reply_to_message_id=bd.message.message_id)
 
 
 # Internal Command /info_***
@@ -168,7 +168,7 @@ def eventInfo(bot, update, groups=None):
 	event = ef.eventInfoFunction(bd.message.text.split(' ')[0][6:])
 
 	if(not event or event is None or event == {} or event == [] or event == ""):
-		bot.sendMessage(chat_id=bd.chat_id, text=ms.eventNotFound)
+		bot.sendMessage(chat_id=bd.chat_id, text=ms.eventNotFound, reply_to_message_id=bd.message.message_id)
 
 	else:
 		log.info(event)
@@ -190,7 +190,7 @@ def eventInfo(bot, update, groups=None):
 			eventDescription = eventDescription.replace("$args5", "(No definido)")
 		eventDescription = eventDescription.replace("$args6", event['id'])
 
-		bot.sendMessage(chat_id=bd.chat_id, text=eventDescription)
+		bot.sendMessage(chat_id=bd.chat_id, text=eventDescription, reply_to_message_id=bd.message.message_id)
 
 
 

@@ -37,9 +37,10 @@ leaving = "Hasta Siempre..."
 
 # Command /changelogB
 groupChangelogUser = 'No queremos aburrir a la gente con el listado de cambios, ¿por qué no me lo preguntas por privado mejor?'
-changelog = ('Versión 2.0.6\n\n(WIP)')
+changelog = ('Versión 2.1.0\n\n(WIP)')
 
-# Command /speak
+# Command /speak & /contact
+contactMessage = 'El usuario $args1 ($args2) te ha enviado un mensaje:\n$args3'
 messageSend = 'Mensaje enviado.'
 incorrectChatId = 'El chat_id indicado no es válido o no tengo acceso a él.'
 

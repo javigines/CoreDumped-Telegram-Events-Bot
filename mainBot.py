@@ -16,7 +16,7 @@ if(len(argv)>1):
 	logging.info('Bot restarting complete.')
 	sleep(2)
 
-from datetime import datetime, time											## System module
+from datetime import datetime, time, timedelta								## System module
 
 from telegram.ext import Updater, CommandHandler, RegexHandler, JobQueue	## pip install python-telegram-bot
 
@@ -73,9 +73,11 @@ logging.info('Events commands loaded correctly.')
 
 #Jobs (Scheduler)
 job_queue = JobQueue(updater.bot)
-job_queue.run_daily(rmr.birthdayReminder, time(hour=8, minute=00, second=00), name='birthdayReminderJob')
-job_queue.run_daily(rmr.eventReminder, time(hour=20, minute=00, second=00), name='eventWeeklyReminderJob', context={'weekly':True}, days=(6,))
-job_queue.run_daily(rmr.eventReminder, time(hour=19, minute=53, second=00), name='eventDailyReminderJob', context={'weekly':False})
+job_queue.run_daily(rmr.birthdayReminder, time(hour=8, minute=0, second=0), name='birthdayReminderJob')
+job_queue.run_daily(rmr.eventReminder, time(hour=20, minute=0, second=0), name='eventWeeklyReminderJob', context={'weekly':True,'daily':False,'hourly':False}, days=(6,))
+job_queue.run_daily(rmr.eventReminder, time(hour=8, minute=0, second=0), name='eventDailyReminderJob', context={'weekly':False,'daily':True,'hourly':False})
+job_queue.run_repeating(rmr.eventReminder, interval=60, first=(datetime.now().replace(second=0,microsecond=0) + timedelta(minutes=1)),name='eventHourlyReminderJob', context={'weekly':False,'daily':False,'hourly':True})
+job_queue.run_repeating(rmr.eventReminder, interval=60, first=(datetime.now().replace(second=0,microsecond=0) + timedelta(minutes=1)), name='eventNowReminderJob', context={'weekly':False,'daily':False,'hourly':False})
 job_queue.start()
 logging.info('Jobs loaded correctly.')
 

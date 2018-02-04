@@ -37,7 +37,7 @@ leaving = "Hasta Siempre..."
 
 # Command /changelogB
 groupChangelogUser = 'No queremos aburrir a la gente con el listado de cambios, ¿por qué no me lo preguntas por privado mejor?'
-changelog = ('Versión 2.1.0\n\n(WIP)')
+changelog = ('Versión 2.1.1\n\n(WIP)')
 
 # Command /speak & /contact
 contactMessage = 'El usuario $args1 ($args2) te ha enviado un mensaje:\n$args3'
@@ -101,6 +101,8 @@ birthdayGreetings = ["Felicidades $args1, cabron@, eres un puto año más viejo.
 # Events reminder
 eventsReminderWeekly = 'El listado de eventos de esta próxima semana es:\n\n$args1'
 eventsReminderDaily = 'El listado de eventos del día de hoy es:\n\n$args1'
+eventsReminderHourly = 'Falta una hora para que empiece\n\n$args1\n¿Estás preparado?'
+eventsReminderStart = 'Acaba de empezar\n\n$args1\nSi no estás ya en él, estás tardando.'
 eventReminder = 'Evento: $args1\nFecha: $args2\nMore Info: $args3'
 
 

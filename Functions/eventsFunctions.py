@@ -249,7 +249,7 @@ def eventListFunction(args=None):
 		if(date['dateStart']==None or date['dateEnd']==None):
 			return 1
 
-		eventList = gc.getEvents(calendar['id'], date["dateStart"].strftime("%Y-%m-%dT%XZ"), date["dateEnd"].strftime("%Y-%m-%dT%XZ"))
+		eventList = gc.getEvents(calendar['id'], date["dateStart"].astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"), date["dateEnd"].astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"))
 	return eventList
 
 def eventCheckFunction(event_id):

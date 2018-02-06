@@ -116,14 +116,15 @@ def eventList(bot, update, args=None):
 			else:
 				bot.sendMessage(chat_id=bd.chat_id, text=formatedEventList, reply_to_message_id=bd.message.message_id)
 
-# Command /removeE
-def eventRemove(bot, update, args=None):
-	bd.startWithCommand(bot, update, args)
+# Internal command /removeE_***
+def eventRemove(bot, update, groups=None):
+	bd.startWithCommand(bot, update, groups)
 
 	if bd.user_id != bd.chatIDDeveloper and bd.user_id not in bd.adminTelegramId:
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)
 
 	else:
+		args = bd.message.text.split(' ')[0][9:]
 		if not ef.eventCheckFunction(str(''.join(args))):
 			bot.sendMessage(chat_id=bd.chat_id, reply_to_message_id=bd.message.message_id,
 			text=ms.removeFailNotEvent.replace("$args1", str(''.join(args))))
@@ -171,7 +172,6 @@ def eventInfo(bot, update, groups=None):
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.eventNotFound, reply_to_message_id=bd.message.message_id)
 
 	else:
-		log.info(event)
 		eventDescription = ms.eventDescription
 		eventDescription = eventDescription.replace("$args1", event['summary'])
 		date = timezone('UTC').localize(datetime.strptime(event['start']['dateTime'], '%Y-%m-%dT%H:%M:%SZ')).astimezone(timezone('Europe/Madrid')).strftime("%d-%m-%Y %H:%M")
@@ -189,6 +189,7 @@ def eventInfo(bot, update, groups=None):
 		else:
 			eventDescription = eventDescription.replace("$args5", "(No definido)")
 		eventDescription = eventDescription.replace("$args6", event['id'])
+		eventDescription = eventDescription.replace("$args7", "/removeE_"+event['id'])
 
 		bot.sendMessage(chat_id=bd.chat_id, text=eventDescription, reply_to_message_id=bd.message.message_id)
 

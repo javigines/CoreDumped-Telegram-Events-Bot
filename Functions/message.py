@@ -84,7 +84,7 @@ formatErrorRemoveE = 'No has introducido /removeE correctamente.'
 
 # Command /info_***
 eventDescription = ("El evento $args1 se celebrará el día $args2\n" +
-					"Descripción: $args3\nImpartido por: $args4\n\nPrecio: $args5\n\nId Evento: $args6")
+					"Descripción: $args3\nImpartido por: $args4\n\nPrecio: $args5\n\nId Evento: $args6\nEliminar: $args7")
 
 # Greetings Birthday
 birthdayGreetings = ["Felicidades $args1, cabron@, eres un puto año más viejo. ",

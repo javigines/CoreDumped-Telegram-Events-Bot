@@ -8,6 +8,7 @@ from subprocess import call									## System module
 from os import _exit, getpid								## System module
 from random import randint									## System module
 
+
 import Functions.basicData as bd							## Own module
 import Functions.message as ms								## Own module
 
@@ -78,7 +79,19 @@ def changelog(bot, update):
 	bd.startWithCommand(bot, update)
 
 	if bd.user_id == bd.chatIDDeveloper or bd.user_id == bd.chat_id:
-		bot.sendMessage(chat_id=bd.chat_id, text=ms.changelog, reply_to_message_id=bd.message.message_id)
+		changelogStr = ""
+		changelog = open("CHANGELOG.md", mode="r")
+		changelogTemp = changelog.read()
+		changelog.close()
+		changelogTemp = "## [" + changelogTemp.split("## [")[2] + "## ["+ changelogTemp.split("## [")[1]+"\n\nPara ver el changelog completo:\nhttps://goo.gl/eHrop3"
+		changelogTemp = changelogTemp.split("\n")
+		for line in changelogTemp:
+			if "###" in line:
+				line = line.replace("###", "_")+ "_"
+			if "##" in line:
+				line = line.replace("##", "*") + "*"
+			changelogStr += line + "\n"
+		bot.sendMessage(chat_id=bd.chat_id, text=changelogStr, reply_to_message_id=bd.message.message_id, parse_mode="MARKDOWN")
 
 	else:
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.groupChangelogUser, reply_to_message_id=bd.message.message_id)

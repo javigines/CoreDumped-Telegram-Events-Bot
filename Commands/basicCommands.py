@@ -8,7 +8,6 @@ from subprocess import call									## System module
 from os import _exit, getpid								## System module
 from random import randint									## System module
 
-
 import Functions.basicData as bd							## Own module
 import Functions.message as ms								## Own module
 
@@ -20,7 +19,7 @@ def start(bot, update):
 	bot.sendMessage(chat_id=bd.chat_id, text=ms.helpOrStart, reply_to_message_id=bd.message.message_id)
 
 
-# Command /restartP or /rebootP
+# Command /restartP or /rebootP (Private)
 def restartP(bot, update):
 	bd.startWithCommand(bot, update)
 
@@ -32,7 +31,7 @@ def restartP(bot, update):
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)
 
 
-# Command /stopP
+# Command /stopP (Private)
 def stopP(bot, update):
 	bd.startWithCommand(bot, update)
 
@@ -44,7 +43,7 @@ def stopP(bot, update):
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)
 
 
-# Command /updateP
+# Command /updateP (Private)
 def updateP(bot, update):
 	bd.startWithCommand(bot, update)
 
@@ -107,9 +106,9 @@ def speak(bot, update, args):
 			bot.sendMessage(chat_id=bd.chat_id, text=ms.messageSend, reply_to_message_id=bd.message.message_id)
 		except:
 			bot.sendMessage(chat_id=bd.chat_id, text=ms.incorrectChatId, reply_to_message_id=bd.message.message_id)
+
 	else:
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)
-
 
 # Changelog command /contact
 def contact(bot, update, args):
@@ -122,7 +121,23 @@ def contact(bot, update, args):
 		log.error(str(e))
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.errorExecCommandUser, reply_to_message_id=bd.message.message_id)
 
+# Download file command /downloadp (Private)
+def downloadP(bot, update, args):
+	bd.startWithCommand(bot, update, args)
 
+	if bd.user_id == bd.chatIDDeveloper:
+		try:
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.downloadInProgress, reply_to_message_id=bd.message.message_id)
+			fileDocument = open("".join(args), mode="rb")
+			bot.sendDocument(chat_id=bd.chatIDDeveloper, document=fileDocument, reply_to_message_id=bd.message.message_id)
+			fileDocument.close()
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.downloadComplete, reply_to_message_id=bd.message.message_id)
+		except Exception as e:
+			log.error(str(e))
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.errorExecCommandUser, reply_to_message_id=bd.message.message_id)
+
+	else:
+		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)
 
 
 log.info('BasicCommands Module Loaded.')

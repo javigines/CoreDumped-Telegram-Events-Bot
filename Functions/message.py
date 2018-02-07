@@ -10,6 +10,7 @@ helpOrStart = ('Las funciones y comandos del bot son los siguiente:\n\n'+
 				'/birthday 23/01/1997 - Añade tu cumpleaños al bot\n'+
 				'/birthdayList (january|18/01/2017|2017)) - Listado de todos los cumpleaños o de los que se encuentren en la fecha.\n'+
 				'/changelog - Últimos cambios en actualizaciones del bot\n'+
+				'/contact ExampleMessage - Manda tu mensaje/sugerencia/bug al desarrollador.\n' +
 				'/eventList (january|18/01/2017|2017) - Listado de todos los eventos o de los que se encuentren en la fecha.\n'+
 				'/help - Esta ayuda\n'+
 				'\n'+
@@ -17,7 +18,6 @@ helpOrStart = ('Las funciones y comandos del bot son los siguiente:\n\n'+
 				'/event Título del Evento | Fecha del Evento con Hora y Duración. Formato:(17/06/2017 18:45 +04:30) | (Impartido por) | (Descripción del Evento) | (Precio del Evento)\n'+
 				'- En el comando /event campos opcionales no usados dejarlos en blanco pero con los separadores |\n'+
 				'/removeB @Peter - Borra el cumpleaños de la persona definida\n'+
-				'/removeE 5hb3j2442342423 - Borra el evento indicado por el id\n'+
 				'\n'+
 				'Todos los parámetros entre paréntesis son opcionales. En el caso de usarlos, no incluir el paréntesis.\n'
 				)
@@ -37,12 +37,15 @@ leaving = "Hasta Siempre..."
 
 # Command /changelogB
 groupChangelogUser = 'No queremos aburrir a la gente con el listado de cambios, ¿por qué no me lo preguntas por privado mejor?'
-changelog = ('Versión 2.1.1\n\n(WIP)')
 
 # Command /speak & /contact
 contactMessage = 'El usuario $args1 ($args2) te ha enviado un mensaje:\n$args3'
 messageSend = 'Mensaje enviado.'
 incorrectChatId = 'El chat_id indicado no es válido o no tengo acceso a él.'
+
+# Command /downloadp
+downloadInProgress = "Enviando Archivo..."
+downloadComplete = "Archivo enviado."
 
 # General Messages
 errorExecCommandAdmin = 'Error al ejecutar $args1 $args2 --> $args3 (chat_id: $args4 , user_id: $args5 )'
@@ -71,7 +74,7 @@ formatErrorEvent = ('No me estás enviando el nuevo evento bien. El formato es:\
 					'Campos opcionales no usados dejarlos en blanco pero con los separadores |')
 newEventAdded = 'Perfecto, he guardado el evento $args1 en la fecha: $args2'
 
-# Command /deleteB or /removeB
+# Command /removeE_***
 removeBirthdayDone = 'Cumpleaños de $args1 borrado correctamente.'
 removeFailNotUser = 'No tengo el cumpleaños de $args1 en mi agenda.'
 formatErrorRemoveB = 'No has introducido /removeB correctamente.'

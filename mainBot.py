@@ -51,6 +51,8 @@ speak_handler = CommandHandler('speak', bc.speak, pass_args=True, allow_edited=T
 dispatcher.add_handler(speak_handler)
 contact_handler = CommandHandler('contact', bc.contact, pass_args=True, allow_edited=True)
 dispatcher.add_handler(contact_handler)
+download_handler = CommandHandler('downloadp', bc.downloadP, pass_args=True, allow_edited=True)
+dispatcher.add_handler(download_handler)
 logging.info('Basic commands loaded correctly.')
 
 # EventsFunctions Commands

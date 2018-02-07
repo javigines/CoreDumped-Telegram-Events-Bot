@@ -7,6 +7,14 @@ All notable changes will be documented in this file.
 - Customize message list for specific Admin & Users
 - Independent Database for Public
 
+## [2.3.0] - 2018-02-07
+## Added
+- Command /downloadp (Private)
+
+## Fixed
+- Internal Commands in Groups
+- Remove Unnecessary Code
+
 ## [2.2.0] - 2018-02-06
 ### Added
 - Changelog File (Finally).

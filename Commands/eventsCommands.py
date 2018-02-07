@@ -124,7 +124,7 @@ def eventRemove(bot, update, groups=None):
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)
 
 	else:
-		args = bd.message.text.split(' ')[0][9:]
+		args = bd.message.text.split(' ')[0][9:].replace("@"+bot.username, "")
 		if not ef.eventCheckFunction(str(''.join(args))):
 			bot.sendMessage(chat_id=bd.chat_id, reply_to_message_id=bd.message.message_id,
 			text=ms.removeFailNotEvent.replace("$args1", str(''.join(args))))
@@ -165,9 +165,7 @@ def eventAdd(bot, update, args=None):
 # Internal Command /info_***
 def eventInfo(bot, update, groups=None):
 	bd.startWithCommand(bot, update, groups)
-
-	event = ef.eventInfoFunction(bd.message.text.split(' ')[0][6:])
-
+	event = ef.eventInfoFunction(bd.message.text.split(' ')[0][6:].replace("@"+bot.username, ""))
 	if(not event or event is None or event == {} or event == [] or event == ""):
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.eventNotFound, reply_to_message_id=bd.message.message_id)
 

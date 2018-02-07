@@ -7,6 +7,10 @@ All notable changes will be documented in this file.
 - Customize message list for specific Admin & Users
 - Independent Database for Public
 
+## [2.3.1] - 2018-02-07
+## Changed
+- Format download changed
+
 ## [2.3.0] - 2018-02-07
 ## Added
 - Command /downloadp (Private)

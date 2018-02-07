@@ -127,11 +127,11 @@ def downloadP(bot, update, args):
 
 	if bd.user_id == bd.chatIDDeveloper:
 		try:
-			bot.sendMessage(chat_id=bd.chat_id, text=ms.downloadInProgress, reply_to_message_id=bd.message.message_id)
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.downloadInProgress)
 			fileDocument = open("".join(args), mode="rb")
 			bot.sendDocument(chat_id=bd.chatIDDeveloper, document=fileDocument, reply_to_message_id=bd.message.message_id)
 			fileDocument.close()
-			bot.sendMessage(chat_id=bd.chat_id, text=ms.downloadComplete, reply_to_message_id=bd.message.message_id)
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.downloadComplete)
 		except Exception as e:
 			log.error(str(e))
 			bot.sendMessage(chat_id=bd.chat_id, text=ms.errorExecCommandUser, reply_to_message_id=bd.message.message_id)

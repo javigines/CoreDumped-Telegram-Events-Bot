@@ -23,12 +23,14 @@ helpOrStart = ('Las funciones y comandos del bot son los siguiente:\n\n'+
 				)
 
 #Command /restartB
+restartWrongOS = "El bot tiene que estar corriendo sobre Linux para usar esta opción."
 restarting = "Reiniciando..."
 
 #Command /stopB
 stopping = "Deteniendo..."
 
 #Command /updateB
+updateWrongOS = "El bot tiene que estar corriendo sobre Linux para usar esta opción."
 updating = "Actualizando..."
 updateDone = 'Actualización completa. Reinicia para aplicar.'
 
@@ -36,6 +38,7 @@ updateDone = 'Actualización completa. Reinicia para aplicar.'
 leaving = "Hasta Siempre..."
 
 # Command /changelogB
+changelogMessage = '$args1 $args2 \nPara ver el changelog completo:\nhttps://goo.gl/eHrop3'
 groupChangelogUser = 'No queremos aburrir a la gente con el listado de cambios, ¿por qué no me lo preguntas por privado mejor?'
 
 # Command /speak & /contact

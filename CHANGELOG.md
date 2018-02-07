@@ -6,16 +6,23 @@ All notable changes will be documented in this file.
 - Option to Enable/Disable Reminders by Calendar
 - Customize message list for specific Admin & Users
 - Independent Database for Public
+- Command to clear log
+
+## [2.3.2] - 2018-02-07
+### Fixed
+- Control commands only Linux Use
+- Redesign basicCommands module structure
+- Must .logs Folder & token.txt
 
 ## [2.3.1] - 2018-02-07
-## Changed
+### Changed
 - Format download changed
 
 ## [2.3.0] - 2018-02-07
-## Added
+### Added
 - Command /downloadp (Private)
 
-## Fixed
+### Fixed
 - Internal Commands in Groups
 - Remove Unnecessary Code
 

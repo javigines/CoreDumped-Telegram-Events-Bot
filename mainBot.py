@@ -3,8 +3,15 @@
 
 import logging																## System module
 import os
-logging.basicConfig(filename=os.path.dirname(os.path.abspath(__file__)) + os.sep+'/.logs/logCoreBot.log',format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+
+try:
+	logging.basicConfig(filename=os.path.dirname(os.path.abspath(__file__)) + os.sep+'/.logs/logCoreBot.log',format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+except Exception as e:
+	print("Se ha generado la siguiente excepción:\n\n"+str(e)+"\n\nCorrijala para ejecutar el programa.")
+	os._exit(1)
+
 logging.info(('-'*30)+' Bot Starting '+('-'*30))
+logging.getLogger('googleapiclient.discovery').setLevel(logging.WARNING)
 
 from subprocess import call													## System module
 from sys import argv														## System module
@@ -23,10 +30,15 @@ from telegram.ext import Updater, CommandHandler, RegexHandler, JobQueue	## pip 
 import Functions.basicData as bd											## Own module
 import Functions.reminder as rmr											## Own module
 import Commands.basicCommands as bc											## Own module
+import Commands.utilsCommands as uc											## Own module
 import Commands.eventsCommands as ec										## Own module
 
+try:
+	token_file = open("token.txt", 'r')
+except Exception as e:
+	print("Se ha generado la siguiente excepción:\n\n"+str(e)+"\n\nCorrijala para ejecutar el programa.")
+	os._exit(1)
 
-token_file = open("token.txt", 'r')
 token = token_file.readline()
 token_file.close()
 
@@ -41,21 +53,24 @@ restart_handler = CommandHandler(list(['restartP','rebootP']), bc.restartP, pass
 dispatcher.add_handler(restart_handler)
 stop_handler = CommandHandler('stopP', bc.stopP, pass_args=False, allow_edited=True)
 dispatcher.add_handler(stop_handler)
-update_handler = CommandHandler('updateP', bc.updateP, pass_args=False, allow_edited=True)
-dispatcher.add_handler(update_handler)
 leave_handler = CommandHandler('leave', bc.leaveGroup, pass_args=False, allow_edited=True)
 dispatcher.add_handler(leave_handler)
 changelog_handler = CommandHandler('changelog', bc.changelog, pass_args=False, allow_edited=True)
 dispatcher.add_handler(changelog_handler)
-speak_handler = CommandHandler('speak', bc.speak, pass_args=True, allow_edited=True)
-dispatcher.add_handler(speak_handler)
 contact_handler = CommandHandler('contact', bc.contact, pass_args=True, allow_edited=True)
 dispatcher.add_handler(contact_handler)
-download_handler = CommandHandler('downloadp', bc.downloadP, pass_args=True, allow_edited=True)
-dispatcher.add_handler(download_handler)
 logging.info('Basic commands loaded correctly.')
 
-# EventsFunctions Commands
+# Utils Commands
+update_handler = CommandHandler('updateP', uc.updateP, pass_args=False, allow_edited=True)
+dispatcher.add_handler(update_handler)
+speak_handler = CommandHandler('speakP', uc.speakP, pass_args=True, allow_edited=True)
+dispatcher.add_handler(speak_handler)
+download_handler = CommandHandler('downloadp', uc.downloadP, pass_args=True, allow_edited=True)
+dispatcher.add_handler(download_handler)
+logging.info('Utils commands loaded correctly.')
+
+# Events Commands
 birthdayList_handler = CommandHandler('birthdayList', ec.birthdayList, pass_args=True, allow_edited=True)
 dispatcher.add_handler(birthdayList_handler)
 remove_handler = CommandHandler(list(['removeB','deleteB']), ec.birthdayRemove, pass_args=True, allow_edited=True)

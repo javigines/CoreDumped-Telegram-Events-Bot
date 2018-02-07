@@ -23,7 +23,7 @@ import Functions.message as ms                              ## Own module
 SCOPES = 'https://www.googleapis.com/auth/calendar'
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'Google Calendar CoreDumpedBot'
-flags = tools.argparser.parse_args('--auth_host_name localhost --logging_level INFO --noauth_local_webserver'.split())
+flags = tools.argparser.parse_args('--auth_host_name localhost --logging_level ERROR --noauth_local_webserver'.split())
 
 
 def get_credentials():

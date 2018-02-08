@@ -1,11 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+
 import logging																## System module
 import os
-
+logFile= os.path.dirname(os.path.abspath(__file__)) + os.sep+'/.logs/logCoreBot.log'
 try:
-	logging.basicConfig(filename=os.path.dirname(os.path.abspath(__file__)) + os.sep+'/.logs/logCoreBot.log',format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+	logging.basicConfig(
+	filename=logFile,
+	format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+	level=logging.INFO
+	)
 except Exception as e:
 	print("Se ha generado la siguiente excepción:\n\n"+str(e)+"\n\nCorrijala para ejecutar el programa.")
 	os._exit(1)
@@ -39,11 +44,14 @@ except Exception as e:
 	print("Se ha generado la siguiente excepción:\n\n"+str(e)+"\n\nCorrijala para ejecutar el programa.")
 	os._exit(1)
 
+bc.logFile = logFile
 token = token_file.readline()
 token_file.close()
 
 updater = Updater(token, workers=200)
 dispatcher = updater.dispatcher
+dispatcher.add_error_handler(bd.basicErrorTelegramHandler)
+
 
 # Initialize "Command" handlers
 # Basic Commands
@@ -66,8 +74,10 @@ update_handler = CommandHandler('updateP', uc.updateP, pass_args=False, allow_ed
 dispatcher.add_handler(update_handler)
 speak_handler = CommandHandler('speakP', uc.speakP, pass_args=True, allow_edited=True)
 dispatcher.add_handler(speak_handler)
-download_handler = CommandHandler('downloadp', uc.downloadP, pass_args=True, allow_edited=True)
+download_handler = CommandHandler('downloadP', uc.downloadP, pass_args=True, allow_edited=True)
 dispatcher.add_handler(download_handler)
+clearLog_handler = CommandHandler('clearlogP', uc.clearLogP, allow_edited=True)
+dispatcher.add_handler(clearLog_handler)
 logging.info('Utils commands loaded correctly.')
 
 # Events Commands
@@ -91,10 +101,10 @@ logging.info('Events commands loaded correctly.')
 #Jobs (Scheduler)
 job_queue = JobQueue(updater.bot)
 job_queue.run_daily(rmr.birthdayReminder, time(hour=8, minute=0, second=0), name='birthdayReminderJob')
-job_queue.run_daily(rmr.eventReminder, time(hour=20, minute=0, second=0), name='eventWeeklyReminderJob', context={'weekly':True,'daily':False,'hourly':False}, days=(6,))
-job_queue.run_daily(rmr.eventReminder, time(hour=8, minute=0, second=0), name='eventDailyReminderJob', context={'weekly':False,'daily':True,'hourly':False})
-job_queue.run_repeating(rmr.eventReminder, interval=60, first=(datetime.now().replace(second=0,microsecond=0) + timedelta(minutes=1)),name='eventHourlyReminderJob', context={'weekly':False,'daily':False,'hourly':True})
-job_queue.run_repeating(rmr.eventReminder, interval=60, first=(datetime.now().replace(second=0,microsecond=0) + timedelta(minutes=1)), name='eventNowReminderJob', context={'weekly':False,'daily':False,'hourly':False})
+job_queue.run_daily(rmr.eventReminder, time(hour=20, minute=0, second=0), name='eventWeeklyReminderJob', context={'monthly':False,'weekly':True,'daily':False,'hourly':False}, days=(6,))
+job_queue.run_daily(rmr.eventReminder, time(hour=8, minute=0, second=0), name='eventDailyReminderJob', context={'monthly':False,'weekly':False,'daily':True,'hourly':False})
+job_queue.run_repeating(rmr.eventReminder, interval=60, first=(datetime.now().replace(second=0,microsecond=0) + timedelta(minutes=1)),name='eventHourlyReminderJob', context={'monthly':False,'weekly':False,'daily':False,'hourly':True})
+job_queue.run_repeating(rmr.eventReminder, interval=60, first=(datetime.now().replace(second=0,microsecond=0) + timedelta(minutes=1)), name='eventNowReminderJob', context={'monthly':False,'weekly':False,'daily':False,'hourly':False})
 job_queue.start()
 logging.info('Jobs loaded correctly.')
 

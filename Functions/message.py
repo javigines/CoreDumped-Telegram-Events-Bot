@@ -47,8 +47,12 @@ messageSend = 'Mensaje enviado.'
 incorrectChatId = 'El chat_id indicado no es válido o no tengo acceso a él.'
 
 # Command /downloadp
+downloadNoArgs = "Es necesario introducir argumentos para realizar la descarga"
 downloadInProgress = "Enviando Archivo..."
 downloadComplete = "Archivo enviado."
+
+# Command /downloadp
+clearlogComplete = "Archivo de log borrado."
 
 # General Messages
 errorExecCommandAdmin = 'Error al ejecutar $args1 $args2 --> $args3 (chat_id: $args4 , user_id: $args5 )'

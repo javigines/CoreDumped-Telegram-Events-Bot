@@ -37,5 +37,7 @@ def startWithCommand(bot, update, args=['']):
 	bot.sendMessage(chat_id=chatIDDeveloper, text=message.text.split(' ')[0] + ' ' + ' '.join(args) + ' --> ' + username + " (chat_id:" + str(chat_id) + " , user_id:"+ str(user_id) + ")")
 
 
+def basicErrorTelegramHandler(bot, update, telegramError):
+	log.error(str(telegramError))
 
 log.info('BasicData Module Loaded.')

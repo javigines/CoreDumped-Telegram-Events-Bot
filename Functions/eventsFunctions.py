@@ -13,6 +13,7 @@ import Functions.googleCalendarQuickFunctions as gc			## Own module
 def translateStringToDatetime(date):
 	finaldate = {}
 	try:
+#		Date only Month
 		if(date.lower() in ["january","enero"]):
 			finaldate["dateStart"] = datetime.now().replace(day=1, month=1)
 			finaldate["dateEnd"] = datetime.now().replace(day=31, month=1)
@@ -74,6 +75,7 @@ def translateStringToDatetime(date):
 
 			return finaldate
 
+#		Date only Year
 		elif(len(date)==4):
 			date = int(date)
 			if date >1899 and date < 3000:
@@ -82,6 +84,7 @@ def translateStringToDatetime(date):
 
 				return finaldate
 
+#		Date Complete with Duration
 		elif(len(date.split(" "))==3):
 			dateTemp = None
 			time = None
@@ -113,6 +116,7 @@ def translateStringToDatetime(date):
 
 			return finaldate
 
+#		Date without Time
 		elif(len(date.split(" "))==1 and (len(date.split("-"))==3 or len(date.split("/"))==3 or
 			len(date.split("."))==3)):
 			date = "/".join(date.split("."))
@@ -122,6 +126,7 @@ def translateStringToDatetime(date):
 
 			return finaldate
 
+#		No more combination if not Return Date Unknown
 		finaldate["dateStart"] = None
 		finaldate["dateEnd"] = None
 
@@ -249,7 +254,8 @@ def eventListFunction(args=None):
 		if(date['dateStart']==None or date['dateEnd']==None):
 			return 1
 
-		eventList = gc.getEvents(calendar['id'], date["dateStart"].astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"), date["dateEnd"].astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"))
+		eventList = gc.getEvents(calendar['id'], date["dateStart"].astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"),
+		 (date["dateEnd"]).astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"))
 	return eventList
 
 def eventCheckFunction(event_id):

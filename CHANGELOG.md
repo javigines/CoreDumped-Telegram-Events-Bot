@@ -8,6 +8,15 @@ All notable changes will be documented in this file.
 - Independent Database for Public
 - Command to clear log
 
+## [2.4.0] - 2018-02-08
+### Added
+- Command /clearLogP (Private)
+
+### Fixed
+- Control wrong commands input
+- Internal improvements
+
+
 ## [2.3.2] - 2018-02-07
 ### Fixed
 - Control commands only Linux Use

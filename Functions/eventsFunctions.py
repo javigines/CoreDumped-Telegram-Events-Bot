@@ -111,8 +111,8 @@ def translateStringToDatetime(date):
 			elif ':' in date.split(" ")[2]:
 				duration = int(date.split(" ")[2].replace('+','').split(":")[0])*60 + int(date.split(" ")[2].split(":")[1])
 
-			finaldate["dateStart"] = timezone('Europe/Madrid').localize(datetime.strptime(dateTemp+' '+time, '%d/%m/%Y %H:%M'))
-			finaldate["dateEnd"] = timezone('Europe/Madrid').localize(datetime.strptime(dateTemp+' '+time, '%d/%m/%Y %H:%M') + timedelta(minutes=duration))
+			finaldate["dateStart"] = datetime.strptime(dateTemp+' '+time, '%d/%m/%Y %H:%M')
+			finaldate["dateEnd"] = (datetime.strptime(dateTemp+' '+time, '%d/%m/%Y %H:%M') + timedelta(minutes=duration))
 
 			return finaldate
 
@@ -254,8 +254,9 @@ def eventListFunction(args=None):
 		if(date['dateStart']==None or date['dateEnd']==None):
 			return 1
 
-		eventList = gc.getEvents(calendar['id'], date["dateStart"].astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"),
-		 (date["dateEnd"]).astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"))
+
+		eventList = gc.getEvents(calendar['id'], timezone('Europe/Madrid').localize(date["dateStart"]).astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"),
+		 timezone('Europe/Madrid').localize(date["dateEnd"]).astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"))
 	return eventList
 
 def eventCheckFunction(event_id):

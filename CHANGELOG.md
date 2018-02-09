@@ -6,7 +6,10 @@ All notable changes will be documented in this file.
 - Option to Enable/Disable Reminders by Calendar
 - Customize message list for specific Admin & Users
 - Independent Database for Public
-- Command to clear log
+
+## [2.4.1] - 2018-02-09
+### Fixed
+- Fix weekly & daily reminder bug
 
 ## [2.4.0] - 2018-02-08
 ### Added

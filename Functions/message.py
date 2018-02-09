@@ -51,8 +51,11 @@ downloadNoArgs = "Es necesario introducir argumentos para realizar la descarga"
 downloadInProgress = "Enviando Archivo..."
 downloadComplete = "Archivo enviado."
 
-# Command /downloadp
+# Command /clearLogP
 clearlogComplete = "Archivo de log borrado."
+
+# Command /publip
+spamMessage = ['Buenos días, soy el magnífico bot de Eventos de CoreDumped.\nQue tal si tú, sucio humano (que no tienes amigos), me introduces... (;D) tu cumpleaños con el comando /birthday para tener al menos mi felicitación ese día.']
 
 # General Messages
 errorExecCommandAdmin = 'Error al ejecutar $args1 $args2 --> $args3 (chat_id: $args4 , user_id: $args5 )'

@@ -78,6 +78,8 @@ download_handler = CommandHandler('downloadP', uc.downloadP, pass_args=True, all
 dispatcher.add_handler(download_handler)
 clearLog_handler = CommandHandler('clearlogP', uc.clearLogP, allow_edited=True)
 dispatcher.add_handler(clearLog_handler)
+publiP_handler = CommandHandler('publiP', uc.publiP, allow_edited=True)
+dispatcher.add_handler(publiP_handler)
 logging.info('Utils commands loaded correctly.')
 
 # Events Commands

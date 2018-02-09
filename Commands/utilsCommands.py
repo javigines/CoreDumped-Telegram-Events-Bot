@@ -97,4 +97,18 @@ def clearLogP(bot, update):
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)
 
 
+# Send spam (like a boss) command /publip (Private)
+def publiP(bot, update):
+	bd.startWithCommand(bot, update)
+
+	if bd.user_id == bd.chatIDDeveloper:
+		try:
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.spamMessage[randint(0, len(ms.spamMessage)-1)], reply_to_message_id=bd.message.message_id)
+		except Exception as e:
+			log.error(str(e))
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.errorExecCommandUser, reply_to_message_id=bd.message.message_id)
+
+	else:
+		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)
+
 log.info('UtilsCommands Module Loaded.')

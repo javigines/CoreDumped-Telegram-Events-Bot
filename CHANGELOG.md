@@ -7,6 +7,10 @@ All notable changes will be documented in this file.
 - Customize message list for specific Admin & Users
 - Independent Database for Public
 
+## [2.4.2] - 2018-02-09
+### Added
+- Spam update
+
 ## [2.4.1] - 2018-02-09
 ### Fixed
 - Fix weekly & daily reminder bug

@@ -24,8 +24,8 @@ def updateP(bot, update):
 			try:
 				bot.sendMessage(chat_id=bd.chatIDDeveloper, text=ms.updating)
 				call("wget -qP /$HOME/EventsBot/ https://api.github.com/repos/javigines/EventsBot-CoreDumped/tarball/Unreleased", shell=True)
-				call("tar -xzf /$HOME/EventsBot/master -C $HOME", shell=True)
-				call("rm -f /$HOME/EventsBot/master*", shell=True)
+				call("tar -xzf /$HOME/EventsBot/Unreleased -C $HOME", shell=True)
+				call("rm -f /$HOME/EventsBot/Unreleased*", shell=True)
 				call("cp -rf $HOME/javigines-EventsBot-CoreDumped-*/* $HOME/EventsBot/ ", shell=True)
 				call("rm -rf $HOME/javigines-EventsBot-CoreDumped-*/", shell=True)
 

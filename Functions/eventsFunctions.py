@@ -5,6 +5,7 @@ import logging												## System module
 log = logging.getLogger(__name__)
 
 from datetime import datetime, timedelta					## System module
+from sys import exc_info
 from pytz import timezone									## pip install pytz
 
 import Functions.googleCalendarQuickFunctions as gc			## Own module
@@ -133,7 +134,7 @@ def translateStringToDatetime(date):
 		return finaldate
 
 	except Exception as e:
-		log.info(str(e))
+		log.error(str(e)+ " - Line "+ str(exc_info()[2].tb_lineno))
 		finaldate["dateStart"] = None
 		finaldate["dateEnd"] = None
 

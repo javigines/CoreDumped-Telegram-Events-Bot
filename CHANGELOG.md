@@ -7,6 +7,15 @@ All notable changes will be documented in this file.
 - Customize message list for specific Admin & Users
 - Independent Database for Public
 
+## [2.5.0 - SNAPSHOT.1] - 2018-02-09
+### Added
+- Command /getlogP (Private)
+
+### Changed
+- Improvement handler exception
+- Bot is mature enough to not warn with every command to the developer. (Only logging)
+- Change update command to update from Unreleased
+
 ## [2.4.2] - 2018-02-09
 ### Added
 - Spam update

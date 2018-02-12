@@ -8,6 +8,7 @@ log = logging.getLogger(__name__)
 from subprocess import call									## System module
 import os													## System module
 from platform import system									## System module
+from sys import exc_info
 from random import randint									## System module
 
 import Functions.basicData as bd							## Own module
@@ -22,16 +23,15 @@ def updateP(bot, update):
 		if system() == "Linux":
 			try:
 				bot.sendMessage(chat_id=bd.chatIDDeveloper, text=ms.updating)
-				call("wget -qP /$HOME/BirthdayBot/ https://api.github.com/repos/javigines/EventsBot-CoreDumped/tarball/master", shell=True)
-				call("tar -xzf /$HOME/BirthdayBot/master -C $HOME", shell=True)
-				call("rm -f /$HOME/BirthdayBot/master*", shell=True)
-				call("cp -rf $HOME/javigines-EventsBot-CoreDumped-*/* $HOME/BirthdayBot/ ", shell=True)
+				call("wget -qP /$HOME/EventsBot/ https://api.github.com/repos/javigines/EventsBot-CoreDumped/tarball/Unreleased", shell=True)
+				call("tar -xzf /$HOME/EventsBot/master -C $HOME", shell=True)
+				call("rm -f /$HOME/EventsBot/master*", shell=True)
+				call("cp -rf $HOME/javigines-EventsBot-CoreDumped-*/* $HOME/EventsBot/ ", shell=True)
 				call("rm -rf $HOME/javigines-EventsBot-CoreDumped-*/", shell=True)
 
 				bot.sendMessage(chat_id=bd.chatIDDeveloper, text=ms.updateDone, reply_to_message_id=bd.message.message_id)
 			except Exception as e:
-				log.error(str(e))
-				bot.sendMessage(chat_id=bd.chat_id, text=ms.errorExecCommandUser, reply_to_message_id=bd.message.message_id)
+				bd.exceptionHandler(bot, update, __name__, e)
 
 		else:
 			bot.sendMessage(chat_id=bd.chat_id, text=ms.updateWrongOS, reply_to_message_id=bd.message.message_id)
@@ -50,7 +50,7 @@ def speakP(bot, update, args):
 			bot.sendMessage(chat_id=args[0], text=' '.join(args).split('|')[1])
 			bot.sendMessage(chat_id=bd.chat_id, text=ms.messageSend, reply_to_message_id=bd.message.message_id)
 		except Exception as e:
-			log.error(str(e))
+			log.error(str(e)+ " - Line "+ str(exc_info()[2].tb_lineno))
 			bot.sendMessage(chat_id=bd.chat_id, text=ms.incorrectChatId, reply_to_message_id=bd.message.message_id)
 
 	else:
@@ -72,8 +72,25 @@ def downloadP(bot, update, args):
 				fileDocument.close()
 				bot.sendMessage(chat_id=bd.chat_id, text=ms.downloadComplete)
 		except Exception as e:
-			log.error(str(e))
-			bot.sendMessage(chat_id=bd.chat_id, text=ms.errorExecCommandUser, reply_to_message_id=bd.message.message_id)
+				bd.exceptionHandler(bot, update, __name__, e, args)
+
+	else:
+		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)
+
+# Send Log File /getLogP (Private)
+def getLogP(bot, update):
+	bd.startWithCommand(bot, update)
+
+	if bd.user_id == bd.chatIDDeveloper:
+		try:
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.downloadInProgress)
+			fileLog = open(logging.getLoggerClass().root.handlers[0].baseFilename, "rb")
+			bot.sendDocument(chat_id=bd.chatIDDeveloper, document=fileLog, reply_to_message_id=bd.message.message_id)
+			fileLog.close()
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.downloadComplete)
+			log.info("Log Clean By User")
+		except Exception as e:
+				bd.exceptionHandler(bot, update, __name__, e)
 
 	else:
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)
@@ -90,8 +107,7 @@ def clearLogP(bot, update):
 			bot.sendMessage(chat_id=bd.chat_id, text=ms.clearlogComplete)
 			log.info("Log Clean By User")
 		except Exception as e:
-			log.error(str(e))
-			bot.sendMessage(chat_id=bd.chat_id, text=ms.errorExecCommandUser, reply_to_message_id=bd.message.message_id)
+				bd.exceptionHandler(bot, update, __name__, e)
 
 	else:
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)
@@ -105,8 +121,7 @@ def publiP(bot, update):
 		try:
 			bot.sendMessage(chat_id=bd.chat_id, text=ms.spamMessage[randint(0, len(ms.spamMessage)-1)], reply_to_message_id=bd.message.message_id)
 		except Exception as e:
-			log.error(str(e))
-			bot.sendMessage(chat_id=bd.chat_id, text=ms.errorExecCommandUser, reply_to_message_id=bd.message.message_id)
+				bd.exceptionHandler(bot, update, __name__, e)
 
 	else:
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)

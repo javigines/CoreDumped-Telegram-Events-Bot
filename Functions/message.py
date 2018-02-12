@@ -34,8 +34,9 @@ updateWrongOS = "El bot tiene que estar corriendo sobre Linux para usar esta opc
 updating = "Actualizando..."
 updateDone = 'Actualización completa. Reinicia para aplicar.'
 
-# Command /leaveB
+# Command /leave
 leaving = "Hasta Siempre..."
+notGroupLeave = "Este chat no permite el comando /leave"
 
 # Command /changelogB
 changelogMessage = '$args1 $args2 \nPara ver el changelog completo:\nhttps://goo.gl/eHrop3'
@@ -43,6 +44,7 @@ groupChangelogUser = 'No queremos aburrir a la gente con el listado de cambios, 
 
 # Command /speak & /contact
 contactMessage = 'El usuario $args1 ($args2) te ha enviado un mensaje:\n$args3'
+contactNoMessage = "Es necesario incluir un mensaje seguido del comando."
 messageSend = 'Mensaje enviado.'
 incorrectChatId = 'El chat_id indicado no es válido o no tengo acceso a él.'
 
@@ -58,8 +60,9 @@ clearlogComplete = "Archivo de log borrado."
 spamMessage = ['Buenos días, soy el magnífico bot de Eventos de CoreDumped.\nQue tal si tú, sucio humano (que no tienes amigos), me introduces... (;D) tu cumpleaños con el comando /birthday para tener al menos mi felicitación ese día.']
 
 # General Messages
-errorExecCommandAdmin = 'Error al ejecutar $args1 $args2 --> $args3 (chat_id: $args4 , user_id: $args5 )'
+errorExecCommandAdmin = 'Error al ejecutar $args1'
 errorExecCommandUser = 'Ha ocurrido un error y se ha informado de él.'
+userNotAuthorizedCommand = "Un usuario esta intentando usar un comando no autorizado:\n$args1"
 notAdmin = ['No intentes hacer lo que no debes.',
 			'Estás tocando algo que no debes, huye mientras puedas, es una amenaza.']
 
@@ -73,7 +76,7 @@ noEventSaved = "No tengo ningún evento guardado."
 # Command /birthday
 notDate = 'Tienes que escribir una fecha.'
 formatErrorBirthday = 'No me estás enviando tu cumpleaños bien.\nEl formato es: "dd/mm/AAAA\n\n'
-askForDelete = 'Ya he guardado tu cumpleaños.\nPide a @javigines que lo borre si no es correcto.'
+askForDelete = 'Ya tengo guardado tu cumpleaños.\nPide a @javigines o a un admin que lo borre si deseas cambiarlo.'
 newBirthdayAdded = 'Perfecto, he guardado tu cumple $args1 en la fecha: $args2'
 notValidBirthday = 'Cumpleaños no válido.'
 
@@ -108,7 +111,7 @@ birthdayGreetings = ["Felicidades $args1, cabron@, eres un puto año más viejo.
 					"Te felicito $args1 porque me han programado, si no ni eso.",
 					"<FileNotFoundError: [Errno 2] No such file or directory: 'felicitaciones.txt' for $args1",
 					"Que cumplas muchos más $args1 pero por favor un poco más rápido, que se me está haciendo muy largo.",
-					"Que ni se te pase por la cabeza que estoy feliz porque cumplas un años más pero felicidades $args1"
+					"Que ni se te pase por la cabeza que estoy feliz porque cumplas un año más, pero felicidades $args1"
 					 ]
 
 # Events reminder

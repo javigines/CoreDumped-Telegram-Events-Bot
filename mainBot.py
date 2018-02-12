@@ -17,6 +17,8 @@ except Exception as e:
 
 logging.info(('-'*30)+' Bot Starting '+('-'*30))
 logging.getLogger('googleapiclient.discovery').setLevel(logging.WARNING)
+logging.getLogger('oauth2client.transport').setLevel(logging.WARNING)
+logging.getLogger('oauth2client.client').setLevel(logging.WARNING)
 
 from subprocess import call													## System module
 from sys import argv														## System module
@@ -76,6 +78,8 @@ speak_handler = CommandHandler('speakP', uc.speakP, pass_args=True, allow_edited
 dispatcher.add_handler(speak_handler)
 download_handler = CommandHandler('downloadP', uc.downloadP, pass_args=True, allow_edited=True)
 dispatcher.add_handler(download_handler)
+getlog_handler = CommandHandler('getLogP', uc.getLogP, allow_edited=True)
+dispatcher.add_handler(getlog_handler)
 clearLog_handler = CommandHandler('clearlogP', uc.clearLogP, allow_edited=True)
 dispatcher.add_handler(clearLog_handler)
 publiP_handler = CommandHandler('publiP', uc.publiP, allow_edited=True)
@@ -111,7 +115,7 @@ job_queue.start()
 logging.info('Jobs loaded correctly.')
 
 
-updater.start_polling(timeout=30)
+updater.start_polling(timeout=30, read_latency=5)
 
 logging.info('MainBot Completly Loaded.')
 logging.info('Bot Working.')

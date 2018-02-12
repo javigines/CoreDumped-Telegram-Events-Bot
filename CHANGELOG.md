@@ -7,7 +7,7 @@ All notable changes will be documented in this file.
 - Customize message list for specific Admin & Users
 - Independent Database for Public
 
-## [2.5.0 - SNAPSHOT.1] - 2018-02-09
+## [2.5.0 - SNAPSHOT.1b] - 2018-02-09
 ### Added
 - Command /getlogP (Private)
 

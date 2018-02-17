@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# A library that provides functionality to the @CoreDumped_EventsBot
+# Copyright (C) 2017-2018
+# Javier Gines Sanchez <software@javisite.com>
+#
 
 from __future__ import print_function
 
@@ -53,6 +57,41 @@ def get_credentials():
 			credentials = tools.run(flow, store)
 		print('Storing credentials to ' + credential_path)
 	return credentials
+
+def auth_stored_credentials(self, scopes=[]):
+        """Authorize stored credentials."""
+
+		home_dir = os.path.dirname(os.path.abspath(__file__)) + os.sep
+		credential_dir = os.path.join(home_dir, '.credentials')
+		if not os.path.exists(credential_dir):
+			os.makedirs(credential_dir)
+		credential_path = os.path.join(credential_dir,
+									   'calendar-manager.json')
+		store = Storage(credential_path)
+		credentials = store.get()
+
+        try:
+            import argparse
+            parser = argparse.ArgumentParser(parents=[tools.argparser])
+            parser.add_argument('args', nargs=argparse.REMAINDER)
+            flags = parser.parse_args()
+            flags.noauth_local_webserver = True
+        except ImportError:
+            flags = None
+        if not credentials or credentials.invalid:
+            flow = client.flow_from_clientsecrets(
+                credential_path,
+                scopes,
+            )
+            flow.user_agent = self.app_name
+            if flags:
+                credentials = tools.run_flow(flow, store, flags)
+            else:  # Needed only for compatibility with Python 2.6
+                credentials = tools.run(flow, store)
+            print 'Saved credentials to ' + self.credentials_file
+        return credentials
+
+
 
 def getService():
 	credentials = get_credentials()

@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+# A library that provides functionality to the @CoreDumped_EventsBot
+# Copyright (C) 2017-2018
+# Javier Gines Sanchez <software@javisite.com>
+#
+
 # Changelog
 All notable changes will be documented in this file.
 

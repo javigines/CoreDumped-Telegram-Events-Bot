@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# A library that provides functionality to the @CoreDumped_EventsBot
+# Copyright (C) 2017-2018
+# Javier Gines Sanchez <software@javisite.com>
+#
 
 import logging												## System module
 log = logging.getLogger(__name__)
@@ -7,17 +11,20 @@ log = logging.getLogger(__name__)
 
 # Command /help or /start
 helpOrStart = ('Las funciones y comandos del bot son los siguiente:\n\n'+
-				'/birthday 23/01/1997 - Añade tu cumpleaños al bot\n'+
-				'/birthdayList (january|18/01/2017|2017)) - Listado de todos los cumpleaños o de los que se encuentren en la fecha.\n'+
-				'/changelog - Últimos cambios en actualizaciones del bot\n'+
-				'/contact ExampleMessage - Manda tu mensaje/sugerencia/bug al desarrollador.\n' +
-				'/eventList (january|18/01/2017|2017) - Listado de todos los eventos o de los que se encuentren en la fecha.\n'+
-				'/help - Esta ayuda\n'+
+				'/birthday 23/01/1997 - _Añade tu cumpleaños al bot._\n'+
+				'/birthdayList (january|18/01/2017|2017)) - _Listado de todos los cumpleaños o de los que se encuentren en la fecha._\n'+
+				'/changelog - _Últimos cambios en actualizaciones del bot._\n'+
+				'/eventList (january|18/01/2017|2017) - _Listado de todos los eventos o de los que se encuentren en la fecha._\n'+
+				'/help - _Esta ayuda._\n'+
 				'\n'+
 				'Admin Commands\n'+
 				'/event Título del Evento | Fecha del Evento con Hora y Duración. Formato:(17/06/2017 18:45 +04:30) | (Impartido por) | (Descripción del Evento) | (Precio del Evento)\n'+
-				'- En el comando /event campos opcionales no usados dejarlos en blanco pero con los separadores |\n'+
-				'/removeB @Peter - Borra el cumpleaños de la persona definida\n'+
+				'- _En el comando /event campos opcionales no usados dejarlos en blanco pero con los separadores |._\n'+
+				'/removeB @Peter - _Borra el cumpleaños de la persona definida._\n'+
+				'/leave - _Si me encuentro en un grupo, lo abandono._\n'+
+				'\n'+
+				'/changelog - _Por si tienes interés, aquí tienes los últimos cambios realizados._\n'+
+				'/contact - _¿Quieres contactar con el desarrollador? Escribe tu mensaje para que se lo envie._\n'+
 				'\n'+
 				'Todos los parámetros entre paréntesis son opcionales. En el caso de usarlos, no incluir el paréntesis.\n'
 				)

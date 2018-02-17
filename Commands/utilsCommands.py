@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# A library that provides functionality to the @CoreDumped_EventsBot
+# Copyright (C) 2017-2018
+# Javier Gines Sanchez <software@javisite.com>
+#
 
 
 import logging												## System module
@@ -88,7 +92,7 @@ def getLogP(bot, update):
 			bot.sendDocument(chat_id=bd.chatIDDeveloper, document=fileLog, reply_to_message_id=bd.message.message_id)
 			fileLog.close()
 			bot.sendMessage(chat_id=bd.chat_id, text=ms.downloadComplete)
-			log.info("Log Clean By User")
+			log.info("Log Dowload By User")
 		except Exception as e:
 				bd.exceptionHandler(bot, update, __name__, e)
 

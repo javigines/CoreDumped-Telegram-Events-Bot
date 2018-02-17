@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# A library that provides functionality to the @CoreDumped_EventsBot
+# Copyright (C) 2017-2018
+# Javier Gines Sanchez <software@javisite.com>
+#
 
 
 import logging																## System module
@@ -46,11 +50,8 @@ except Exception as e:
 	print("Se ha generado la siguiente excepción:\n\n"+str(e)+"\n\nCorrijala para ejecutar el programa.")
 	os._exit(1)
 
-bc.logFile = logFile
-token = token_file.readline()
+updater = Updater(token_file.read().splitlines()[0], workers=200)
 token_file.close()
-
-updater = Updater(token, workers=200)
 dispatcher = updater.dispatcher
 dispatcher.add_error_handler(bd.basicErrorTelegramHandler)
 
@@ -119,6 +120,6 @@ updater.start_polling(timeout=30, read_latency=5)
 
 logging.info('MainBot Completly Loaded.')
 logging.info('Bot Working.')
-updater.bot.sendMessage(chat_id=bd.chatIDDeveloper, text="Bot Iniciado")
+updater.bot.sendMessage(chat_id=bd.chatIDDeveloper, text="Bot Iniciado", disable_notification=True)
 
 updater.idle()

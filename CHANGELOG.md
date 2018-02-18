@@ -13,7 +13,7 @@ All notable changes will be documented in this file.
 - Customize message list for specific Admin & Users
 - Independent Database for Public
 
-## [2.5.0 - SNAPSHOT.2b] - 2018-02-09
+## [2.5.0 - SNAPSHOT.2c] - 2018-02-18
 ### Added
 - Requirements file for easy install of python modules
 
@@ -21,6 +21,7 @@ All notable changes will be documented in this file.
 - Improve Google API connection
 - Leave command now available for group admins
 - Copyright update
+- Restrict Events Info Data for Admins
 
 ### Fixed
 - Timeout telegram API

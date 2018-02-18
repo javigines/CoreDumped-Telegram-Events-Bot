@@ -194,8 +194,13 @@ def eventInfo(bot, update, groups=None):
 			eventDescription = eventDescription.replace("$args5", event['description'].split('/&/')[0].split('|/|')[2])
 		else:
 			eventDescription = eventDescription.replace("$args5", "(No definido)")
-		eventDescription = eventDescription.replace("$args6", event['id'])
-		eventDescription = eventDescription.replace("$args7", "/removeE_"+event['id'])
+			
+		if bd.user_id != bd.chatIDDeveloper and bd.user_id not in bd.adminTelegramId:
+			eventDescription = eventDescription.replace("$args6", event['id'])
+			eventDescription = eventDescription.replace("$args7", "/removeE_"+event['id'])
+		else:
+			eventDescription = eventDescription.replace("$args6", "Only Admin")
+			eventDescription = eventDescription.replace("$args7", "Only Admin)
 
 		bot.sendMessage(chat_id=bd.chat_id, text=eventDescription, reply_to_message_id=bd.message.message_id)
 

@@ -13,7 +13,7 @@ All notable changes will be documented in this file.
 - Customize message list for specific Admin & Users
 - Independent Database for Public
 
-## [2.5.0 - SNAPSHOT.2d] - 2018-02-18
+## [2.5.0 - SNAPSHOT.2e] - 2018-02-18
 ### Added
 - Requirements file for easy install of python modules
 

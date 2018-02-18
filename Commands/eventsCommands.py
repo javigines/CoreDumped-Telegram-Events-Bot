@@ -195,7 +195,12 @@ def eventInfo(bot, update, groups=None):
 		else:
 			eventDescription = eventDescription.replace("$args5", "(No definido)")
 
-		if bd.user_id != bd.chatIDDeveloper and bd.user_id not in bd.adminTelegramId:
+		admin = False
+		for adminMember in bd.message.chat.get_administrators():
+			if adminMember['user']['id'] is bd.user_id:
+				admin = True
+
+		if bd.user_id == bd.chatIDDeveloper or admin or bd.message.chat.all_members_are_administrators:
 			eventDescription = eventDescription.replace("$args6", event['id'])
 			eventDescription = eventDescription.replace("$args7", "/removeE_"+event['id'])
 		else:

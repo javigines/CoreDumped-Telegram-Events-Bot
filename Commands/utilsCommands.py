@@ -92,7 +92,7 @@ def getLogP(bot, update):
 			bot.sendDocument(chat_id=bd.chatIDDeveloper, document=fileLog, reply_to_message_id=bd.message.message_id)
 			fileLog.close()
 			bot.sendMessage(chat_id=bd.chat_id, text=ms.downloadComplete)
-			log.info("Log Dowload By User")
+			log.info("Log Download By User")
 		except Exception as e:
 				bd.exceptionHandler(bot, update, __name__, e)
 

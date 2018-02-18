@@ -116,7 +116,7 @@ job_queue.start()
 logging.info('Jobs loaded correctly.')
 
 
-updater.start_polling(timeout=30, read_latency=5)
+updater.start_polling(poll_interval = 1.0, timeout=20, read_latency=5)
 
 logging.info('MainBot Completly Loaded.')
 logging.info('Bot Working.')

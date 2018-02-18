@@ -316,10 +316,10 @@ def eventAddFunction(args, data):
 		'summary': (' '.join(args)).split('|')[0],
 		'description': '|/|'.join((' '.join(args)).split('|')[2:]) + '/&/' + data,
 		'start': {
-			'dateTime': date['dateStart'].astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"),
+			'dateTime': timezone('Europe/Madrid').localize(date['dateStart']).astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"),
 			},
 		'end': {
-			'dateTime': date['dateEnd'].astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"),
+			'dateTime': timezone('Europe/Madrid').localize(date['dateEnd']).astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"),
 			},
 		}
 

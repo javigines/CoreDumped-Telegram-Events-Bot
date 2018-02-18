@@ -196,11 +196,15 @@ def eventInfo(bot, update, groups=None):
 			eventDescription = eventDescription.replace("$args5", "(No definido)")
 
 		admin = False
-		for adminMember in bd.message.chat.get_administrators():
-			if adminMember['user']['id'] is bd.user_id:
+		if update.effective_chat != None and update.effective_chat.type != "private":
+			if bd.message.chat.all_members_are_administrators:
 				admin = True
+			else:
+				for adminMember in bd.message.chat.get_administrators():
+					if adminMember['user']['id'] is bd.user_id:
+						admin = True
 
-		if bd.user_id == bd.chatIDDeveloper or admin or bd.message.chat.all_members_are_administrators:
+		if bd.user_id == bd.chatIDDeveloper or admin:
 			eventDescription = eventDescription.replace("$args6", event['id'])
 			eventDescription = eventDescription.replace("$args7", "/removeE_"+event['id'])
 		else:

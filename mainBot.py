@@ -8,7 +8,9 @@
 
 import logging																## System module
 import os
-logFile= os.path.dirname(os.path.abspath(__file__)) + os.sep+'/.logs/logCoreBot.log'
+if not os.path.exists(os.path.dirname(__file__) + os.sep+'.logs' + os.sep):
+		os.makedirs(os.path.dirname(__file__) + os.sep+'.logs' + os.sep)
+logFile= os.path.dirname(__file__) + os.sep+'.logs' + os.sep+ 'logCoreBot.log'
 try:
 	logging.basicConfig(
 	filename=logFile,
@@ -116,7 +118,7 @@ job_queue.start()
 logging.info('Jobs loaded correctly.')
 
 
-updater.start_polling(poll_interval = 1.0, timeout=20, read_latency=5)
+updater.start_polling(poll_interval = 1.0, timeout=20, read_latency=5, clean=True)
 
 logging.info('MainBot Completly Loaded.')
 logging.info('Bot Working.')

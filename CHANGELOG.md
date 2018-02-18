@@ -13,7 +13,7 @@ All notable changes will be documented in this file.
 - Customize message list for specific Admin & Users
 - Independent Database for Public
 
-## [2.5.0 - SNAPSHOT.2f] - 2018-02-18
+## [2.5.0 - SNAPSHOT.2g] - 2018-02-18
 ### Added
 - Requirements file for easy install of python modules
 
@@ -26,6 +26,7 @@ All notable changes will be documented in this file.
 ### Fixed
 - Timeout telegram API
 - Bug Fixed in Event Add
+- Bug Fix in MoreInfo Events
 
 ## [2.5.0 - SNAPSHOT.1c] - 2018-02-09
 ### Added

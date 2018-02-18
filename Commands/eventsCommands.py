@@ -201,7 +201,7 @@ def eventInfo(bot, update, groups=None):
 				admin = True
 			else:
 				for adminMember in bd.message.chat.get_administrators():
-					if adminMember['user']['id'] is bd.user_id:
+					if adminMember['user']['id'] == bd.user_id:
 						admin = True
 
 		if bd.user_id == bd.chatIDDeveloper or admin:

@@ -47,8 +47,6 @@ def get_credentials():
 		log.info('Storing credentials to ' + credential_path)
 	return credentials
 
-
-
 def getService():
 	credentials = get_credentials()
 	http = credentials.authorize(httplib2.Http())

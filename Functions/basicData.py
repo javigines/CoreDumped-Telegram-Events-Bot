@@ -7,9 +7,9 @@
 
 import logging												## System module
 log = logging.getLogger(__name__)
-from sys import exc_info
+from sys import exc_info									## System module
 
-import Functions.message as ms
+import Functions.message as ms								## Own module
 
 
 ## Debug chat_id
@@ -17,7 +17,6 @@ chatIDDeveloper = 372406715
 ## Chat_id from group you what to announce events greetings
 chatIDCoreDumped = -1001088278003
 
-adminTelegramId = ['15360527','42795873']
 
 ## Usefull Variables
 message = None

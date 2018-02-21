@@ -79,6 +79,7 @@ notAdmin = ['No intentes hacer lo que no debes.',
 groupListUser = "Pídeme el listado por privado para evitar hacer spam aquí.\n\n@CoreDumped_EventsBot"
 noBirthdaySaved = "No tengo ningún cumpleaños guardado."
 noEventSaved = "No tengo ningún evento guardado."
+restrictBirthday = "Esta función esta restrigida a los usuarios pertenecientes a CoreDumped."
 
 # Command /birthday
 notDate = 'Tienes que escribir una fecha.'
@@ -107,7 +108,7 @@ formatErrorRemoveE = 'No has introducido /removeE correctamente.'
 
 # Command /info_***
 eventDescription = ("El evento $args1 se celebrará el día $args2\n" +
-					"Descripción: $args3\nImpartido por: $args4\n\nPrecio: $args5\n\nId Evento: $args6\nEliminar: $args7")
+					"Descripción: $args3\nImpartido por: $args4\n\nPrecio: $args5\n\n$args6\n$args7")
 
 # Greetings Birthday
 birthdayGreetings = ["Felicidades $args1, cabron@, eres un puto año más viejo. ",

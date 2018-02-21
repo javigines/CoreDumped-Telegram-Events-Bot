@@ -13,6 +13,11 @@ All notable changes will be documented in this file.
 - Customize message list for specific Admin & Users
 - Independent Database for Public
 
+## [2.5.0 - SNAPSHOT.3a] - 2018-02-21
+### Changed
+- Now birthday commands are only allow to Coredumped Users
+- Improve moreinfo command appearance
+
 ## [2.5.0 - SNAPSHOT.2g] - 2018-02-18
 ### Added
 - Requirements file for easy install of python modules

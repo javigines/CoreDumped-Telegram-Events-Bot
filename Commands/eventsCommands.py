@@ -21,79 +21,93 @@ import Functions.message as ms                              ## Own module
 def birthdayList(bot, update, args=None):
 	bd.startWithCommand(bot, update, args)
 
-	eventList = ef.birthdayListFunction(args=args)
 
-	if(eventList is None or eventList == {} or eventList == [] or eventList == ""):
-		bot.sendMessage(chat_id=bd.chat_id, text=ms.noBirthdaySaved, reply_to_message_id=bd.message.message_id)
+	if bot.get_chat_member(chat_id=bd.chatIDCoreDumped, user_id=bd.user_id).status in ['creator', 'administrator', 'member']:
+		eventList = ef.birthdayListFunction(args=args)
 
-	elif(eventList==1):
-	   bot.sendMessage(chat_id=bd.chat_id, text=ms.dateUnknown, reply_to_message_id=bd.message.message_id)
+		if(eventList is None or eventList == {} or eventList == [] or eventList == ""):
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.noBirthdaySaved, reply_to_message_id=bd.message.message_id)
 
-	else:
-		formatedEventList = ''
-		lap = 1
-		for event in eventList:
-			date = timezone('UTC').localize(datetime.strptime(event['start']['date'], '%Y-%m-%d')).astimezone(timezone('Europe/Madrid')).strftime("%d-%m")
-			if bd.user_id != bd.chatIDDeveloper and bd.user_id not in bd.adminTelegramId:
-				formatedEventList += (str(lap) + '. ' + date + ': ' + event['summary'].split('|')[0] + '\n')
-			else:
-				formatedEventList += (str(lap) + '. ' + date + '-' + event['summary'].split('|')[2] + ': ' + event['summary'].split('|')[0] + '\n')
+		elif(eventList==1):
+		   bot.sendMessage(chat_id=bd.chat_id, text=ms.dateUnknown, reply_to_message_id=bd.message.message_id)
 
-			lap += 1
-		if bd.user_id == bd.chatIDDeveloper or bd.user_id in bd.adminTelegramId:
-			bot.sendMessage(chat_id=bd.chat_id, text=formatedEventList, reply_to_message_id=bd.message.message_id)
 		else:
-			if(bd.chat_id != bd.user_id):
-				bot.sendMessage(chat_id=bd.chat_id, text=ms.groupListUser, reply_to_message_id=bd.message.message_id)
-			else:
+			formatedEventList = ''
+			lap = 1
+			for event in eventList:
+				date = timezone('UTC').localize(datetime.strptime(event['start']['date'], '%Y-%m-%d')).astimezone(timezone('Europe/Madrid')).strftime("%d-%m")
+				if bd.user_id != bd.chatIDDeveloper and bot.get_chat_member(chat_id=bd.chatIDCoreDumped, user_id=bd.user_id).status not in ['creator', 'administrator']:
+					formatedEventList += (str(lap) + '. ' + date + ': ' + event['summary'].split('|')[0] + '\n')
+				else:
+					formatedEventList += (str(lap) + '. ' + date + '-' + event['summary'].split('|')[2] + ': ' + event['summary'].split('|')[0] + '\n')
+
+				lap += 1
+			if bd.user_id == bd.chatIDDeveloper or bot.get_chat_member(chat_id=bd.chatIDCoreDumped, user_id=bd.user_id).status in ['creator', 'administrator']:
 				bot.sendMessage(chat_id=bd.chat_id, text=formatedEventList, reply_to_message_id=bd.message.message_id)
+			else:
+				if(bd.chat_id != bd.user_id):
+					bot.sendMessage(chat_id=bd.chat_id, text=ms.groupListUser, reply_to_message_id=bd.message.message_id)
+				else:
+					bot.sendMessage(chat_id=bd.chat_id, text=formatedEventList, reply_to_message_id=bd.message.message_id)
+	else:
+		bot.sendMessage(chat_id=bd.chat_id, text=ms.restrictBirthday, reply_to_message_id=bd.message.message_id)
 
 # Command /removeB
 def birthdayRemove(bot, update, args=None):
 	bd.startWithCommand(bot, update, args)
 
-	if bd.user_id != bd.chatIDDeveloper and bd.user_id not in bd.adminTelegramId:
-		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)
+	if bot.get_chat_member(chat_id=bd.chatIDCoreDumped, user_id=bd.user_id).status in ['creator', 'administrator', 'member']:
+		eventList = ef.birthdayListFunction(args=args)
 
-	else:
-		if not ef.birthdayCheckFunction(str(''.join(args))):
-			bot.sendMessage(chat_id=bd.chat_id, reply_to_message_id=bd.message.message_id,
-			text=ms.removeFailNotUser.replace("$args1", str(''.join(args))))
+		if bd.user_id != bd.chatIDDeveloper and bot.get_chat_member(chat_id=bd.chatIDCoreDumped, user_id=bd.user_id).status not in ['creator', 'administrator']:
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)
 
 		else:
-			result = ef.birthdayRemoveFunction(args=args)
-			if(result is None or result == {} or result == [] or result == ""):
+			if not ef.birthdayCheckFunction(str(''.join(args))):
 				bot.sendMessage(chat_id=bd.chat_id, reply_to_message_id=bd.message.message_id,
 				text=ms.removeFailNotUser.replace("$args1", str(''.join(args))))
 
-			elif(result==1):
-				bot.sendMessage(chat_id=bd.chat_id, text=ms.formatErrorRemoveB, reply_to_message_id=bd.message.message_id)
-
 			else:
-				bot.sendMessage(chat_id=bd.chat_id, reply_to_message_id=bd.message.message_id,
-				text=ms.removeBirthdayDone.replace("$args1", str(''.join(args))))
+				result = ef.birthdayRemoveFunction(args=args)
+				if(result is None or result == {} or result == [] or result == ""):
+					bot.sendMessage(chat_id=bd.chat_id, reply_to_message_id=bd.message.message_id,
+					text=ms.removeFailNotUser.replace("$args1", str(''.join(args))))
+
+				elif(result==1):
+					bot.sendMessage(chat_id=bd.chat_id, text=ms.formatErrorRemoveB, reply_to_message_id=bd.message.message_id)
+
+				else:
+					bot.sendMessage(chat_id=bd.chat_id, reply_to_message_id=bd.message.message_id,
+					text=ms.removeBirthdayDone.replace("$args1", str(''.join(args))))
+	else:
+		bot.sendMessage(chat_id=bd.chat_id, text=ms.restrictBirthday, reply_to_message_id=bd.message.message_id)
 
 # Command /birthday
 def birthdayAdd(bot, update, args=None):
 	bd.startWithCommand(bot, update, args)
 
-	if ef.birthdayCheckFunction(str(bd.user_id)):
-		bot.sendMessage(chat_id=bd.chat_id, text=ms.askForDelete, reply_to_message_id=bd.message.message_id)
+	if bot.get_chat_member(chat_id=bd.chatIDCoreDumped, user_id=bd.user_id).status in ['creator', 'administrator', 'member']:
+		eventList = ef.birthdayListFunction(args=args)
 
-	else:
-		result = ef.birthdayAddFunction(args=args, summary=(bd.username+'|'+str(bd.user_id)))
-		if(result is None or result == {} or result == [] or result == ""):
-			bot.sendMessage(chat_id=bd.chat_id, text=ms.notDate, reply_to_message_id=bd.message.message_id)
-
-		elif(result==1):
-			bot.sendMessage(chat_id=bd.chat_id, text=ms.formatErrorBirthday, reply_to_message_id=bd.message.message_id)
-
-		elif(result==2):
-			bot.sendMessage(chat_id=bd.chat_id, text=ms.notValidBirthday, reply_to_message_id=bd.message.message_id)
+		if ef.birthdayCheckFunction(str(bd.user_id)):
+			bot.sendMessage(chat_id=bd.chat_id, text=ms.askForDelete, reply_to_message_id=bd.message.message_id)
 
 		else:
-			bot.sendMessage(chat_id=bd.chat_id, reply_to_message_id=bd.message.message_id,
-			text=ms.newBirthdayAdded.replace("$args1", bd.username).replace("$args2", ' '.join(args)))
+			result = ef.birthdayAddFunction(args=args, summary=(bd.username+'|'+str(bd.user_id)))
+			if(result is None or result == {} or result == [] or result == ""):
+				bot.sendMessage(chat_id=bd.chat_id, text=ms.notDate, reply_to_message_id=bd.message.message_id)
+
+			elif(result==1):
+				bot.sendMessage(chat_id=bd.chat_id, text=ms.formatErrorBirthday, reply_to_message_id=bd.message.message_id)
+
+			elif(result==2):
+				bot.sendMessage(chat_id=bd.chat_id, text=ms.notValidBirthday, reply_to_message_id=bd.message.message_id)
+
+			else:
+				bot.sendMessage(chat_id=bd.chat_id, reply_to_message_id=bd.message.message_id,
+				text=ms.newBirthdayAdded.replace("$args1", bd.username).replace("$args2", ' '.join(args)))
+	else:
+		bot.sendMessage(chat_id=bd.chat_id, text=ms.restrictBirthday, reply_to_message_id=bd.message.message_id)
 
 
 # Command /eventList
@@ -116,7 +130,7 @@ def eventList(bot, update, args=None):
 			formatedEventList += (str(lap) + '. ' + event['summary'] + ': ' + date +
 			'\nMore Info: /info_' + event['id'] + '\n\n')
 			lap += 1
-		if bd.user_id == bd.chatIDDeveloper or bd.user_id in bd.adminTelegramId:
+		if bd.user_id == bd.chatIDDeveloper or bot.get_chat_member(chat_id=bd.chatIDCoreDumped, user_id=bd.user_id).status in ['creator', 'administrator']:
 			bot.sendMessage(chat_id=bd.chat_id, text=formatedEventList, reply_to_message_id=bd.message.message_id)
 		else:
 			if(bd.chat_id != bd.user_id):
@@ -128,7 +142,7 @@ def eventList(bot, update, args=None):
 def eventRemove(bot, update, groups=None):
 	bd.startWithCommand(bot, update, groups)
 
-	if bd.user_id != bd.chatIDDeveloper and bd.user_id not in bd.adminTelegramId:
+	if bd.user_id != bd.chatIDDeveloper and bot.get_chat_member(chat_id=bd.chatIDCoreDumped, user_id=bd.user_id).status not in ['creator', 'administrator']:
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)
 
 	else:
@@ -154,7 +168,7 @@ def eventRemove(bot, update, groups=None):
 def eventAdd(bot, update, args=None):
 	bd.startWithCommand(bot, update, args)
 
-	if bd.user_id != bd.chatIDDeveloper and bd.user_id not in bd.adminTelegramId:
+	if bd.user_id != bd.chatIDDeveloper and bot.get_chat_member(chat_id=bd.chatIDCoreDumped, user_id=bd.user_id).status not in ['creator', 'administrator']:
 		bot.sendMessage(chat_id=bd.chat_id, text=ms.notAdmin[randint(0, len(ms.notAdmin)-1)], reply_to_message_id=bd.message.message_id)
 
 	else:
@@ -205,11 +219,11 @@ def eventInfo(bot, update, groups=None):
 						admin = True
 
 		if bd.user_id == bd.chatIDDeveloper or admin:
-			eventDescription = eventDescription.replace("$args6", event['id'])
-			eventDescription = eventDescription.replace("$args7", "/removeE_"+event['id'])
+			eventDescription = eventDescription.replace("$args6", "Event ID: " + event['id'])
+			eventDescription = eventDescription.replace("$args7", "Remove Event: /removeE_"+event['id'])
 		else:
-			eventDescription = eventDescription.replace("$args6", "Only Admin")
-			eventDescription = eventDescription.replace("$args7", "Only Admin")
+			eventDescription = eventDescription.replace("$args6", "")
+			eventDescription = eventDescription.replace("$args7", "")
 
 		bot.sendMessage(chat_id=bd.chat_id, text=eventDescription, reply_to_message_id=bd.message.message_id)
 

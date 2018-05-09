@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-from __future__ import print_function
+# A library that provides functionality to the @CoreDumped_EventsBot
+# Copyright (C) 2017-2018
+# Javier Gines Sanchez <software@javisite.com>
+#
 
 import logging												## System module
 log = logging.getLogger(__name__)
@@ -23,24 +25,15 @@ import Functions.message as ms                              ## Own module
 SCOPES = 'https://www.googleapis.com/auth/calendar'
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'Google Calendar CoreDumpedBot'
-flags = tools.argparser.parse_args('--auth_host_name localhost --logging_level ERROR --noauth_local_webserver'.split())
+flags = tools.argparser.parse_args('--auth_host_name localhost --noauth_local_webserver --logging_level ERROR'.split())
 
 
 def get_credentials():
-	"""Gets valid user credentials from storage.
-
-	If nothing has been stored, or if the stored credentials are invalid,
-	the OAuth2 flow is completed to obtain the new credentials.
-
-	Returns:
-		Credentials, the obtained credential.
-	"""
 	home_dir = os.path.dirname(os.path.abspath(__file__)) + os.sep
 	credential_dir = os.path.join(home_dir, '.credentials')
 	if not os.path.exists(credential_dir):
 		os.makedirs(credential_dir)
-	credential_path = os.path.join(credential_dir,
-								   'calendar-manager.json')
+	credential_path = os.path.join(credential_dir, 'calendar-python-quickstart.json')
 
 	store = Storage(credential_path)
 	credentials = store.get()
@@ -49,15 +42,15 @@ def get_credentials():
 		flow.user_agent = APPLICATION_NAME
 		if flags:
 			credentials = tools.run_flow(flow, store, flags)
-		else: # Needed only for compatibility with Python 2.6
+		else:
 			credentials = tools.run(flow, store)
-		print('Storing credentials to ' + credential_path)
+		log.info('Storing credentials to ' + credential_path)
 	return credentials
 
 def getService():
 	credentials = get_credentials()
 	http = credentials.authorize(httplib2.Http())
-	service = discovery.build('calendar', 'v3', http=http)
+	service = discovery.build('calendar', 'v3', http=http, cache_discovery=False)
 	return service
 
 

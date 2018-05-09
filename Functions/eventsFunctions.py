@@ -1,10 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# A library that provides functionality to the @CoreDumped_EventsBot
+# Copyright (C) 2017-2018
+# Javier Gines Sanchez <software@javisite.com>
+#
 
 import logging												## System module
 log = logging.getLogger(__name__)
 
 from datetime import datetime, timedelta					## System module
+from sys import exc_info
 from pytz import timezone									## pip install pytz
 
 import Functions.googleCalendarQuickFunctions as gc			## Own module
@@ -133,7 +138,7 @@ def translateStringToDatetime(date):
 		return finaldate
 
 	except Exception as e:
-		log.info(str(e))
+		log.error(str(e)+ " - Line "+ str(exc_info()[2].tb_lineno))
 		finaldate["dateStart"] = None
 		finaldate["dateEnd"] = None
 
@@ -311,10 +316,10 @@ def eventAddFunction(args, data):
 		'summary': (' '.join(args)).split('|')[0],
 		'description': '|/|'.join((' '.join(args)).split('|')[2:]) + '/&/' + data,
 		'start': {
-			'dateTime': date['dateStart'].astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"),
+			'dateTime': timezone('Europe/Madrid').localize(date['dateStart']).astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"),
 			},
 		'end': {
-			'dateTime': date['dateEnd'].astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"),
+			'dateTime': timezone('Europe/Madrid').localize(date['dateEnd']).astimezone(timezone('UTC')).strftime("%Y-%m-%dT%XZ"),
 			},
 		}
 

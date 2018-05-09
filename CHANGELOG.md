@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+# A library that provides functionality to the @CoreDumped_EventsBot
+# Copyright (C) 2017-2018
+# Javier Gines Sanchez <software@javisite.com>
+#
+
 # Changelog
 All notable changes will be documented in this file.
 
@@ -6,6 +12,79 @@ All notable changes will be documented in this file.
 - Option to Enable/Disable Reminders by Calendar
 - Customize message list for specific Admin & Users
 - Independent Database for Public
+
+
+## [2.5.0] - 2018-05-09
+### Added
+- Command /getlogP (Private)
+- Requirements file for easy install of python modules
+- New /help for Admin
+
+### Changed
+- Improvement handler exception
+- Bot is mature enough to not warn with every command to the developer. (Only logging)
+- Change update command to update from Unreleased
+- Improve Google API connection
+- Leave command now available for group admins
+- Copyright update
+- Restrict Events Info Data for Admins
+- Now birthday commands are only allow to Coredumped Users
+- Improve moreinfo command appearance
+- Added Chat Spam Log
+- Admin Hardcoded List
+- /help for Users
+- Some Greetings for Privacy
+- Secure /clearlogP
+
+### Removed
+- Command /speakP
+
+### Fixed
+- Timeout telegram API
+- Bug Fixed in Event Add
+- Bug Fix in MoreInfo Events
+
+## [2.5.0 - SNAPSHOT.4a] - 2018-05-09
+- Final Snapshot
+### Added
+- New /help for Admin
+### Changed
+- Added Chat Spam Log
+- Admin Hardcoded List
+- /help for Users
+- Some Greetings for Privacy
+- Secure /clearlogP
+### Removed
+- Command /speakP
+
+## [2.5.0 - SNAPSHOT.3a] - 2018-02-21
+### Changed
+- Now birthday commands are only allow to Coredumped Users
+- Improve moreinfo command appearance
+
+## [2.5.0 - SNAPSHOT.2g] - 2018-02-18
+### Added
+- Requirements file for easy install of python modules
+
+### Changed
+- Improve Google API connection
+- Leave command now available for group admins
+- Copyright update
+- Restrict Events Info Data for Admins
+
+### Fixed
+- Timeout telegram API
+- Bug Fixed in Event Add
+- Bug Fix in MoreInfo Events
+
+## [2.5.0 - SNAPSHOT.1c] - 2018-02-09
+### Added
+- Command /getlogP (Private)
+
+### Changed
+- Improvement handler exception
+- Bot is mature enough to not warn with every command to the developer. (Only logging)
+- Change update command to update from Unreleased
 
 ## [2.4.2] - 2018-02-09
 ### Added

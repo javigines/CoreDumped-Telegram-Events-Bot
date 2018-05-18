@@ -33,8 +33,7 @@ def updateP(bot, update):
                 call("cp -rf $HOME/javigines-EventsBot-CoreDumped-*/* $HOME/EventsBot/ ", shell=True)
                 call("rm -rf $HOME/javigines-EventsBot-CoreDumped-*/", shell=True)
 
-                bot.sendMessage(chat_id=bd.chat_id_authorized[1], text=ms.updateDone,
-                                reply_to_message_id=bd.message.message_id)
+                bot.sendMessage(chat_id=bd.chat_id_authorized[1], text=ms.updateDone)
             except Exception as e:
                 bd.exceptionHandler(bot, update, __name__, e)
 
